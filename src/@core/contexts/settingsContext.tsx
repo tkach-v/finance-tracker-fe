@@ -1,29 +1,22 @@
 'use client'
 
-// React Imports
 import type { ReactNode } from 'react'
 import { createContext, useMemo, useState } from 'react'
 
-// Type Imports
 import type { Mode } from '@core/types'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 
-// Hook Imports
 import { useObjectCookie } from '@core/hooks/useObjectCookie'
 
-// Settings type
 export type Settings = {
   mode?: Mode
 }
 
-// UpdateSettingsOptions type
 type UpdateSettingsOptions = {
   updateCookie?: boolean
 }
 
-// SettingsContextProps type
 type SettingsContextProps = {
   settings: Settings
   updateSettings: (settings: Partial<Settings>, options?: UpdateSettingsOptions) => void
@@ -38,12 +31,9 @@ type Props = {
   mode?: Mode
 }
 
-// Initial Settings Context
 export const SettingsContext = createContext<SettingsContextProps | null>(null)
 
-// Settings Provider
 export const SettingsProvider = (props: Props) => {
-  // Initial Settings
   const initialSettings: Settings = {
     mode: themeConfig.mode
   }
@@ -53,13 +43,11 @@ export const SettingsProvider = (props: Props) => {
     mode: props.mode || themeConfig.mode
   }
 
-  // Cookies
   const [settingsCookie, updateSettingsCookie] = useObjectCookie<Settings>(
     themeConfig.settingsCookieName,
     JSON.stringify(props.settingsCookie) !== '{}' ? props.settingsCookie : updatedInitialSettings
   )
 
-  // State
   const [_settingsState, _updateSettingsState] = useState<Settings>(
     JSON.stringify(settingsCookie) !== '{}' ? settingsCookie : updatedInitialSettings
   )
@@ -70,7 +58,6 @@ export const SettingsProvider = (props: Props) => {
     _updateSettingsState(prev => {
       const newSettings = { ...prev, ...settings }
 
-      // Update cookie if needed
       if (updateCookie) updateSettingsCookie(newSettings)
 
       return newSettings
@@ -92,7 +79,6 @@ export const SettingsProvider = (props: Props) => {
   const updatePageSettings = (settings: Partial<Settings>): (() => void) => {
     updateSettings(settings, { updateCookie: false })
 
-    // Returns a function to reset the page settings
     return () => updateSettings(settingsCookie, { updateCookie: false })
   }
 

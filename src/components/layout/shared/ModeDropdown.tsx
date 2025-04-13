@@ -1,23 +1,17 @@
 'use client'
 
-// React Imports
 import { useRef, useState } from 'react'
 
-// MUI Imports
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 
-// Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
 
 const ModeDropdown = () => {
-  // States
   const [tooltipOpen, setTooltipOpen] = useState(false)
 
-  // Refs
   const anchorRef = useRef<HTMLButtonElement>(null)
 
-  // Hooks
   const { settings, updateSettings } = useSettings()
 
   const handleToggle = () => {
@@ -41,7 +35,7 @@ const ModeDropdown = () => {
   return (
     <>
       <Tooltip
-        title={settings.mode + ' Mode'}
+        title={(settings.mode === 'dark' ? 'Темна' : 'Світла') + ' Тема'}
         onOpen={() => setTooltipOpen(true)}
         onClose={() => setTooltipOpen(false)}
         open={tooltipOpen}

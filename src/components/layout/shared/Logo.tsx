@@ -1,15 +1,11 @@
 'use client'
 
-// React Imports
 import type { CSSProperties } from 'react'
 
-// Third-party Imports
 import styled from '@emotion/styled'
 
-// Component Imports
-import MaterioLogo from '@core/svg/Logo'
+import LogoIcon from '@core/svg/Logo'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 
 type LogoTextProps = {
@@ -29,7 +25,7 @@ const LogoText = styled.span<LogoTextProps>`
 const Logo = ({ color }: { color?: CSSProperties['color'] }) => {
   return (
     <div className='flex items-center min-bs-[24px]'>
-      <MaterioLogo className='text-[22px] text-primary' />
+      <LogoIcon className='text-[22px] text-primary' color={color ?? 'var(--mui-palette-text-primary)'} />
       <LogoText color={color}>{themeConfig.templateName}</LogoText>
     </div>
   )

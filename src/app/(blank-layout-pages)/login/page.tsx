@@ -4,9 +4,9 @@ import Login from '@views/Login'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 
-const LoginPage = () => {
+const LoginPage = async () => {
   // Vars
-  const mode = getServerMode()
+  const mode = await getServerMode()
 
   return <Login mode={mode} />
 }

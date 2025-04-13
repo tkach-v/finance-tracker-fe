@@ -1,9 +1,7 @@
 'use client'
 
-// React Imports
 import { useMemo } from 'react'
 
-// MUI Imports
 import { deepmerge } from '@mui/utils'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
@@ -16,20 +14,15 @@ import CssBaseline from '@mui/material/CssBaseline'
 import type {} from '@mui/material/themeCssVarsAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
 import type {} from '@mui/lab/themeAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
 
-// Type Imports
 import type { ChildrenType, Direction } from '@core/types'
 
-// Component Imports
 import ModeChanger from './ModeChanger'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 import primaryColorConfig from '@configs/primaryColorConfig'
 
-// Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
 
-// Core Theme Imports
 import defaultCoreTheme from '@core/theme'
 
 type Props = ChildrenType & {
@@ -37,13 +30,10 @@ type Props = ChildrenType & {
 }
 
 const ThemeProvider = (props: Props) => {
-  // Props
   const { children, direction } = props
 
-  // Hooks
   const { settings } = useSettings()
 
-  // Merge the primary color scheme override with the core theme
   const theme = useMemo(() => {
     const newColorScheme = {
       colorSchemes: {

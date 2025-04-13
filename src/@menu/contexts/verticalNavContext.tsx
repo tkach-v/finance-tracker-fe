@@ -1,9 +1,7 @@
 'use client'
 
-// React Imports
 import { createContext, useCallback, useMemo, useState } from 'react'
 
-// Type Imports
 import type { ChildrenType } from '../types'
 
 export type VerticalNavState = {
@@ -21,10 +19,8 @@ export type VerticalNavContextProps = VerticalNavState & {
 const VerticalNavContext = createContext({} as VerticalNavContextProps)
 
 export const VerticalNavProvider = ({ children }: ChildrenType) => {
-  // States
   const [verticalNavState, setVerticalNavState] = useState<VerticalNavState>()
 
-  // Hooks
   const updateVerticalNavState = useCallback((values: Partial<VerticalNavState>) => {
     setVerticalNavState(prevState => ({
       ...prevState,

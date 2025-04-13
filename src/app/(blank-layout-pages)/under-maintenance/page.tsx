@@ -4,9 +4,9 @@ import UnderMaintenance from '@views/pages/misc/UnderMaintenance'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 
-const UnderMaintenancePage = () => {
+const UnderMaintenancePage = async () => {
   // Vars
-  const mode = getServerMode()
+  const mode = await getServerMode()
 
   return <UnderMaintenance mode={mode} />
 }

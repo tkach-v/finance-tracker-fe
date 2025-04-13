@@ -4,9 +4,9 @@ import NotFound from '@views/NotFound'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 
-const Error = () => {
+const Error = async () => {
   // Vars
-  const mode = getServerMode()
+  const mode = await getServerMode()
 
   return <NotFound mode={mode} />
 }

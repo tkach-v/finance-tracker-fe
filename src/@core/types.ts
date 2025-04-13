@@ -1,4 +1,3 @@
-// React Imports
 import type { ReactNode } from 'react'
 
 export type Skin = 'default' | 'bordered'

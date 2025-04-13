@@ -18,25 +18,19 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
 
-// Type Imports
 import type { Mode } from '@core/types'
 
-// Component Imports
 import Illustrations from '@components/Illustrations'
 import Logo from '@components/layout/shared/Logo'
 
-// Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
 const Register = ({ mode }: { mode: Mode }) => {
-  // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
 
-  // Vars
   const darkImg = '/images/pages/auth-v1-mask-dark.png'
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
-  // Hooks
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
