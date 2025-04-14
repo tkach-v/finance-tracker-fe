@@ -1,4 +1,3 @@
-// Override Imports
 import Accordion from './accordion'
 import Alerts from './alerts'
 import Autocomplete from './autocomplete'

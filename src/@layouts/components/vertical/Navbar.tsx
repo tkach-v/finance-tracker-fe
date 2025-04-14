@@ -1,16 +1,12 @@
 'use client'
 
-// Third-party Imports
 import classnames from 'classnames'
 import type { CSSObject } from '@emotion/styled'
 
-// Type Imports
 import type { ChildrenType } from '@core/types'
 
-// Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
 
-// Styled Component Imports
 import StyledHeader from '@layouts/styles/vertical/StyledHeader'
 
 type Props = ChildrenType & {
@@ -18,7 +14,6 @@ type Props = ChildrenType & {
 }
 
 const Navbar = (props: Props) => {
-  // Props
   const { children, overrideStyles } = props
 
   return (

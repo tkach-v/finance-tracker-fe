@@ -1,7 +1,5 @@
-// MUI Imports
 import type { Theme } from '@mui/material/styles'
 
-// Type Imports
 import type { Skin } from '@core/types'
 
 const card = (skin: Skin): Theme['components'] => {

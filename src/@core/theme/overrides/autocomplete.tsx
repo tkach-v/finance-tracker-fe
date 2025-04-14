@@ -1,10 +1,7 @@
-// React Imports
 import React from 'react'
 
-// MUI Imports
 import type { Theme } from '@mui/material/styles'
 
-// Type Imports
 import type { Skin } from '@core/types'
 
 const autocomplete = (skin: Skin): Theme['components'] => ({

@@ -1,13 +1,9 @@
-// Next Imports
 import { Inter } from 'next/font/google'
 
-// MUI Imports
 import type { Theme } from '@mui/material/styles'
 
-// Type Imports
 import type { SystemMode } from '@core/types'
 
-// Theme Options Imports
 import overrides from './overrides'
 import colorSchemes from './colorSchemes'
 import spacing from './spacing'

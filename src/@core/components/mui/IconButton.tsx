@@ -3,7 +3,6 @@
 import MuiButton from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 
 const CustomIconButton = styled(MuiButton)(({ color, size, theme, variant }) => {

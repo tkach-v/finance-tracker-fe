@@ -1,17 +1,13 @@
 'use client'
 
-// React Imports
 import { createContext, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ForwardRefRenderFunction, MenuHTMLAttributes, MutableRefObject, ReactElement, ReactNode } from 'react'
 
-// Next Imports
 import { usePathname } from 'next/navigation'
 
-// Third-party Imports
 import classnames from 'classnames'
 import type { CSSObject } from '@emotion/styled'
 
-// Type Imports
 import type {
   ChildrenType,
   MenuItemStyles,
@@ -20,16 +16,12 @@ import type {
   RenderExpandedMenuItemIcon
 } from '../../types'
 
-// Util Imports
 import { menuClasses } from '../../utils/menuClasses'
 
-// Styled Component Imports
 import StyledVerticalMenu from '../../styles/vertical/StyledVerticalMenu'
 
-// Style Imports
 import styles from '../../styles/styles.module.css'
 
-// Default Config Imports
 import { verticalSubMenuToggleDuration } from '../../defaultConfigs'
 
 export type MenuSectionStyles = {
@@ -80,7 +72,6 @@ export type MenuProps = VerticalMenuContextProps &
 export const VerticalMenuContext = createContext({} as VerticalMenuContextProps)
 
 const Menu: ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (props, ref) => {
-  // Props
   const {
     children,
     className,
@@ -95,13 +86,10 @@ const Menu: ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (props, ref) 
     ...rest
   } = props
 
-  // States
   const [openSubmenu, setOpenSubmenu] = useState<OpenSubmenu[]>([])
 
-  // Refs
   const openSubmenusRef = useRef<OpenSubmenu[]>([])
 
-  // Hooks
   const pathname = usePathname()
 
   const toggleOpenSubmenu = useCallback(

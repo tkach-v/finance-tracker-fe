@@ -5,6 +5,7 @@ import { SettingsProvider } from '@core/contexts/settingsContext'
 import ThemeProvider from '@components/theme'
 
 import { getMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
+import ReduxProvider from '@/store/reduxProvider'
 
 type Props = ChildrenType & {
   direction: Direction
@@ -17,13 +18,13 @@ const Providers = async (props: Props) => {
   const settingsCookie = await getSettingsFromCookie()
 
   return (
-    <VerticalNavProvider>
-      <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
-        <ThemeProvider direction={direction}>
-          {children}
-        </ThemeProvider>
-      </SettingsProvider>
-    </VerticalNavProvider>
+    <ReduxProvider>
+      <VerticalNavProvider>
+        <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
+          <ThemeProvider direction={direction}>{children}</ThemeProvider>
+        </SettingsProvider>
+      </VerticalNavProvider>
+    </ReduxProvider>
   )
 }
 

@@ -1,12 +1,9 @@
 import 'server-only'
 
-// Next Imports
 import { cookies } from 'next/headers'
 
-// Type Imports
 import type { Settings } from '@core/contexts/settingsContext'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 
 export const getSettingsFromCookie = async (): Promise<Settings> => {

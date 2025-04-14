@@ -8,7 +8,7 @@ import '@assets/iconify-icons/generated-icons.css'
 
 export const metadata = {
   title: 'Трекер фінансів',
-  description: 'Слідкуйте за своїми витратами та доходами легко і зручно',
+  description: 'Слідкуйте за своїми витратами та доходами легко і зручно'
 }
 
 const RootLayout = ({ children }: ChildrenType) => {
