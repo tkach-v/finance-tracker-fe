@@ -1,25 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
+import storage from 'redux-persist/lib/storage'
 
 import { BaseApi } from '@/api/_base.api'
 import appReducer from '@/store/slices/appReducer'
-
-const createNoopStorage = () => {
-  return {
-    getItem() {
-      return Promise.resolve(null)
-    },
-    setItem(_key: string, value: number) {
-      return Promise.resolve(value)
-    },
-    removeItem() {
-      return Promise.resolve()
-    }
-  }
-}
-
-const storage = typeof window !== 'undefined' ? createWebStorage('local') : createNoopStorage()
 
 const rootPersistConfig = {
   key: '-root',
@@ -37,7 +21,10 @@ export { rootReducer }
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(BaseApi.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
+    serializableCheck: false,
+    immutableCheck: false,
+  }).concat(BaseApi.middleware),
   devTools: true
 })
 
