@@ -30,20 +30,20 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
           <Link href='/' className='flex justify-center items-center mbe-6'>
             <Logo />
           </Link>
-          <Typography variant='h4'>Forgot Password 🔒</Typography>
+          <Typography variant='h4'>Забув пароль 🔒</Typography>
           <div className='flex flex-col gap-5'>
             <Typography className='mbs-1'>
-              Enter your email and we&#39;ll send you instructions to reset your password
+              Введи свою електронну пошту, та ми надішлемо тобі інструкції для зміни паролю
             </Typography>
             <Form noValidate autoComplete='off' className='flex flex-col gap-5'>
-              <TextField autoFocus fullWidth label='Email' />
+              <TextField autoFocus fullWidth label='Електронна пошта' />
               <Button fullWidth variant='contained' type='submit'>
-                Send reset link
+                Продовжити
               </Button>
               <Typography className='flex justify-center items-center' color='primary'>
                 <Link href='/login' className='flex items-center'>
                   <DirectionalIcon ltrIconClass='ri-arrow-left-s-line' rtlIconClass='ri-arrow-right-s-line' />
-                  <span>Back to Login</span>
+                  <span>Повернутись до входу</span>
                 </Link>
               </Typography>
             </Form>

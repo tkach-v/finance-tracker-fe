@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type { ChildrenType } from '@core/types'
 import BlankLayout from '@layouts/BlankLayout'

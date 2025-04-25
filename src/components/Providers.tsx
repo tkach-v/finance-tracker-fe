@@ -6,6 +6,7 @@ import ThemeProvider from '@components/theme'
 
 import { getMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
 import ReduxProvider from '@/store/reduxProvider'
+import SnackbarProvider from '@/providers/SnackbarProvider'
 
 type Props = ChildrenType & {
   direction: Direction
@@ -19,6 +20,7 @@ const Providers = async (props: Props) => {
 
   return (
     <ReduxProvider>
+      <SnackbarProvider />
       <VerticalNavProvider>
         <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
           <ThemeProvider direction={direction}>{children}</ThemeProvider>

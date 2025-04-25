@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type { ChildrenType } from '@core/types'
 
@@ -13,7 +13,7 @@ const Layout = ({ children }: ChildrenType) => {
   const router = useRouter()
   const { user, isLoading } = useCurrentUser()
 
-  if (!isLoading && !user) return router.replace("/login")
+  if (!isLoading && !user) return router.replace('/login')
 
   if (isLoading || !user) {
     return null

@@ -1,22 +1,17 @@
 'use client'
 
-// React Imports
 import { useState } from 'react'
 
-// Next Imports
 import Link from 'next/link'
 
-// MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
-import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
+import * as yup from 'yup'
 
 import type { Mode } from '@core/types'
 
@@ -24,8 +19,32 @@ import Illustrations from '@components/Illustrations'
 import Logo from '@components/layout/shared/Logo'
 
 import { useImageVariant } from '@/hooks/useImageVariant'
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useActions } from '@/hooks/useActions'
+
+type RegisterFormInputs = {
+  email: string
+  password: string
+}
+
+const registerSchema = yup.object({
+  email: yup.string().email('Неправильна адреса електронної пошти').required("Адреса електронна пошта обов'язкова"),
+  password: yup
+    .string()
+    .required("Пароль обов'язковий")
+    .min(8, 'Довжина паролю повинна бути не менше 8 символів')
+    .max(50, 'Довжина паролю повинна бути не більше 50 символів')
+})
 
 const Register = ({ mode }: { mode: Mode }) => {
+  const { showSnackBar } = useActions()
+
+  const {} = useForm<RegisterFormInputs>({
+    resolver: yupResolver(registerSchema),
+    defaultValues: { email: '', password: '' }
+  })
+
   const [isPasswordShown, setIsPasswordShown] = useState(false)
 
   const darkImg = '/images/pages/auth-v1-mask-dark.png'
@@ -42,15 +61,14 @@ const Register = ({ mode }: { mode: Mode }) => {
           <Link href='/' className='flex justify-center items-start mbe-6'>
             <Logo />
           </Link>
-          <Typography variant='h4'>Adventure starts here 🚀</Typography>
+          <Typography variant='h4'>Зареєструйся 🚀</Typography>
           <div className='flex flex-col gap-5'>
-            <Typography className='mbs-1'>Make your app management easy and fun!</Typography>
+            <Typography className='mbs-1'>Введи свої дані, щоб створити обліковий запис</Typography>
             <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()} className='flex flex-col gap-5'>
-              <TextField autoFocus fullWidth label='Username' />
-              <TextField fullWidth label='Email' />
+              <TextField fullWidth label='Електронна пошта' />
               <TextField
                 fullWidth
-                label='Password'
+                label='Пароль'
                 type={isPasswordShown ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -67,40 +85,13 @@ const Register = ({ mode }: { mode: Mode }) => {
                   )
                 }}
               />
-              <FormControlLabel
-                control={<Checkbox />}
-                label={
-                  <>
-                    <span>I agree to </span>
-                    <Link className='text-primary' href='/' onClick={e => e.preventDefault()}>
-                      privacy policy & terms
-                    </Link>
-                  </>
-                }
-              />
               <Button fullWidth variant='contained' type='submit'>
-                Sign Up
+                Зареєструватися
               </Button>
               <div className='flex justify-center items-center flex-wrap gap-2'>
-                <Typography>Already have an account?</Typography>
                 <Typography component={Link} href='/login' color='primary'>
-                  Sign in instead
+                  Уже маєш обліковий запис?
                 </Typography>
-              </div>
-              <Divider className='gap-3'>Or</Divider>
-              <div className='flex justify-center items-center gap-2'>
-                <IconButton size='small' className='text-facebook'>
-                  <i className='ri-facebook-fill' />
-                </IconButton>
-                <IconButton size='small' className='text-twitter'>
-                  <i className='ri-twitter-fill' />
-                </IconButton>
-                <IconButton size='small' className='text-github'>
-                  <i className='ri-github-fill' />
-                </IconButton>
-                <IconButton size='small' className='text-googlePlus'>
-                  <i className='ri-google-fill' />
-                </IconButton>
               </div>
             </form>
           </div>
