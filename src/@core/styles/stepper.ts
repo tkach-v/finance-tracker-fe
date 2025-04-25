@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
-import type { BoxProps } from '@mui/material/Box'
+import { BoxProps } from '@mui/material/Box'
 
 const StepperWrapper = styled(Box)<BoxProps>(({ theme }) => {
   return {

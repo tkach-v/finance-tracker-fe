@@ -1,17 +1,13 @@
 'use client'
 
-// React Imports
 import type { ReactNode } from 'react'
 
-// MUI Components
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 
-// Type Imports
 import type { Mode } from '@core/types'
 
-// Hook Imports
-import { useImageVariant } from '@core/hooks/useImageVariant'
+import { useImageVariant } from '@/hooks/useImageVariant'
 
 type ImageObj = {
   src: string

@@ -1,4 +1,3 @@
-// Type Imports
 import type { BreakpointType } from './types'
 
 export const defaultBreakpoints: Record<BreakpointType, string> = {

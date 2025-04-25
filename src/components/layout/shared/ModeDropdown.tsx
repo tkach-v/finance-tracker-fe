@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 
-import { useSettings } from '@core/hooks/useSettings'
+import { useSettings } from '@/hooks/useSettings'
 
 const ModeDropdown = () => {
   const [tooltipOpen, setTooltipOpen] = useState(false)

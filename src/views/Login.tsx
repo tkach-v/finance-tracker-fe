@@ -20,28 +20,21 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
 
-// Type Imports
 import type { Mode } from '@core/types'
 
-// Component Imports
 import Logo from '@components/layout/shared/Logo'
 import Illustrations from '@components/Illustrations'
 
-// Config Imports
 import themeConfig from '@configs/themeConfig'
 
-// Hook Imports
-import { useImageVariant } from '@core/hooks/useImageVariant'
+import { useImageVariant } from '@/hooks/useImageVariant'
 
 const Login = ({ mode }: { mode: Mode }) => {
-  // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
 
-  // Vars
   const darkImg = '/images/pages/auth-v1-mask-dark.png'
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
-  // Hooks
   const router = useRouter()
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 

@@ -23,7 +23,7 @@ import type { Mode } from '@core/types'
 import Illustrations from '@components/Illustrations'
 import Logo from '@components/layout/shared/Logo'
 
-import { useImageVariant } from '@core/hooks/useImageVariant'
+import { useImageVariant } from '@/hooks/useImageVariant'
 
 const Register = ({ mode }: { mode: Mode }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false)

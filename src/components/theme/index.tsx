@@ -21,7 +21,7 @@ import ModeChanger from './ModeChanger'
 import themeConfig from '@configs/themeConfig'
 import primaryColorConfig from '@configs/primaryColorConfig'
 
-import { useSettings } from '@core/hooks/useSettings'
+import { useSettings } from '@/hooks/useSettings'
 
 import defaultCoreTheme from '@core/theme'
 

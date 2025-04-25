@@ -1,9 +1,7 @@
-// MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
-// Components Imports
 import CardInfluencingInfluencerWithImg from '@views/card-basic/CardInfluencingInfluencerWithImg'
 import CardUser from '@views/card-basic/CardUser'
 import CardWithCollapse from '@views/card-basic/CardWithCollapse'

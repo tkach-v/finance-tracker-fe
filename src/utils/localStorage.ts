@@ -1,6 +1,16 @@
-'use client'
+import { isClient } from '@/utils/platform'
 
-const setItemToStorage = (key: string, object: any) => {
+enum StorageKeys {
+  ACCESS_TOKEN = 'accessToken',
+  REFRESH_TOKEN = 'refreshToken'
+}
+
+const setItemToStorage = (object: any, key: string) => {
+  if (!isClient()) {
+    console.warn("Can't write to localStorage on serverSide")
+    return
+  }
+
   const data = JSON.stringify(object)
 
   if (data) {
@@ -11,18 +21,38 @@ const setItemToStorage = (key: string, object: any) => {
 }
 
 const getItemFromStorage = (key: string) => {
-  const data = localStorage.getItem(key)
+  if (isClient()) {
+    const data = localStorage.getItem(key)
 
-  if (data) {
-    return JSON.parse(data)
+    if (data) {
+      try {
+        return JSON.parse(data)
+      } catch (error) {
+        return data
+      }
+    } else {
+      return null
+    }
   } else {
-    return null
+    return false
   }
 }
 
 export const localStorageService = {
-  setTheme: (theme: 'light' | 'dark') => setItemToStorage('theme', theme),
-  getTheme: (): 'light' | 'dark' | null => getItemFromStorage('theme'),
+  getAccessToken: () => getItemFromStorage(StorageKeys.ACCESS_TOKEN),
+  setAccessToken: (data: string) => setItemToStorage(data, StorageKeys.ACCESS_TOKEN),
+  removeAccessToken: () => localStorage.removeItem(StorageKeys.ACCESS_TOKEN),
+  getRefreshToken: () => getItemFromStorage(StorageKeys.REFRESH_TOKEN),
+  setRefreshToken: (data: string) => setItemToStorage(data, StorageKeys.REFRESH_TOKEN),
+  removeRefreshToken: () => localStorage.removeItem(StorageKeys.REFRESH_TOKEN),
 
-  clear: () => localStorage.clear()
+  isAuthenticated: () => {
+    const access = localStorageService.getAccessToken()
+
+    return Boolean(access)
+  },
+
+  logout: () => {
+    localStorage.clear()
+  }
 }

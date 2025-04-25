@@ -5,6 +5,7 @@ import type { ChildrenType } from '@core/types'
 import '@/app/globals.css'
 
 import '@assets/iconify-icons/generated-icons.css'
+import Providers from '@components/Providers'
 
 export const metadata = {
   title: 'Трекер фінансів',
@@ -16,7 +17,9 @@ const RootLayout = ({ children }: ChildrenType) => {
 
   return (
     <html id='__next' dir={direction}>
-      <body className='flex is-full min-bs-full flex-auto flex-col'>{children}</body>
+      <body className='flex is-full min-bs-full flex-auto flex-col'>
+        <Providers direction='ltr'>{children}</Providers>
+      </body>
     </html>
   )
 }

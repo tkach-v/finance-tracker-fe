@@ -1,14 +1,10 @@
-// React Imports
 import { useEffect } from 'react'
 
-// MUI Imports
 import { useColorScheme } from '@mui/material/styles'
 
-// Hook Imports
-import { useSettings } from '@core/hooks/useSettings'
+import { useSettings } from '@/hooks/useSettings'
 
 const ModeChanger = () => {
-  // Hooks
   const { setMode } = useColorScheme()
   const { settings } = useSettings()
 

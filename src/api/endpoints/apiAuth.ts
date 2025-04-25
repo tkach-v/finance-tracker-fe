@@ -1,5 +1,26 @@
 import type { EndpointBuilder } from '@reduxjs/toolkit/query'
 
+import { AUTH } from '@/api'
+import { AuthRequest } from '@/api/types/auth'
+import { TagTypes } from '@/utils/rtk-tags'
+
 export const apiAuth = {
-  endpoints: (builder: EndpointBuilder<any, any, any>) => ({})
+  endpoints: (builder: EndpointBuilder<any, any, any>) => ({
+    login: builder.mutation({
+      query: (body: AuthRequest) => ({
+        url: AUTH.login(),
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [TagTypes.CURRENT_USER]
+    }),
+    register: builder.mutation({
+      query: (body: AuthRequest) => ({
+        url: AUTH.login(),
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [TagTypes.CURRENT_USER]
+    })
+  })
 }

@@ -1,13 +1,12 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useMemo, useState, ReactNode } from 'react'
 
-import type { Mode } from '@core/types'
+import { Mode } from '@core/types'
 
 import themeConfig from '@configs/themeConfig'
 
-import { useObjectCookie } from '@core/hooks/useObjectCookie'
+import { useObjectCookie } from '@/hooks/useObjectCookie'
 
 export type Settings = {
   mode?: Mode

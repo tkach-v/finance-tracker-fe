@@ -9,7 +9,7 @@ import type { Mode } from '@core/types'
 
 import Illustrations from '@components/Illustrations'
 
-import { useImageVariant } from '@core/hooks/useImageVariant'
+import { useImageVariant } from '@/hooks/useImageVariant'
 
 const NotFound = ({ mode }: { mode: Mode }) => {
   const darkImg = '/images/pages/misc-mask-dark.png'

@@ -1,7 +1,4 @@
-// MUI Imports
 import Grid from '@mui/material/Grid'
-
-// Components Imports
 import Award from '@views/dashboard/Award'
 import Transactions from '@views/dashboard/Transactions'
 import WeeklyOverview from '@views/dashboard/WeeklyOverview'
