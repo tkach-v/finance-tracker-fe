@@ -8,6 +8,16 @@ export type LoginResponse = {
   refresh: string
 }
 
+export type ForgotPasswordRequest = {
+  email: string
+}
+
+export type ResetPasswordRequest = {
+  uid: string
+  token: string
+  new_password: string
+}
+
 export type TokenRefreshResponse = {
   access: string
 }

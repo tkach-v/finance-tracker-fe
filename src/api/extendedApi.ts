@@ -7,6 +7,8 @@ export const extendedApi = BaseApi.injectEndpoints(apiAuth).injectEndpoints(apiU
 export const {
   useLoginMutation,
   useRegisterMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 
   useGetCurrentUserQuery
 } = extendedApi

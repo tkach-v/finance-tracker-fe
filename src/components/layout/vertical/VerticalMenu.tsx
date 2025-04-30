@@ -4,7 +4,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
 
-import { Menu, SubMenu, MenuItem, MenuSection } from '@menu/vertical-menu'
+import { Menu, MenuItem, MenuSection } from '@menu/vertical-menu'
 
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 
@@ -45,33 +45,18 @@ const VerticalMenu = ({ scrollMenu }: { scrollMenu: (container: any, isPerfectSc
             onScrollY: container => scrollMenu(container, true)
           })}
     >
-      {/* Incase you also want to scroll NavHeader to scroll with Vertical Menu, remove NavHeader from above and paste it below this comment */}
-      {/* Vertical Menu */}
       <Menu
         menuItemStyles={menuItemStyles(theme)}
         renderExpandIcon={({ open }) => <RenderExpandIcon open={open} transitionDuration={transitionDuration} />}
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(theme)}
       >
-        <MenuSection label='Apps & Pages'>
-          <MenuItem href='/account-settings' icon={<i className='ri-user-settings-line' />}>
-            Account Settings
-          </MenuItem>
-          <SubMenu label='Auth Pages' icon={<i className='ri-shield-keyhole-line' />}>
-            <MenuItem href='/login' target='_blank'>
-              Login
-            </MenuItem>
-            <MenuItem href='/register' target='_blank'>
-              Register
-            </MenuItem>
-            <MenuItem href='/forgot-password' target='_blank'>
-              Forgot Password
-            </MenuItem>
-          </SubMenu>
-          <MenuItem href='/card-basic' icon={<i className='ri-bar-chart-box-line' />}>
-            Cards
-          </MenuItem>
-        </MenuSection>
+        <MenuItem href='/account-settings' icon={<i className='ri-user-settings-line' />}>
+          Account Settings
+        </MenuItem>
+        <MenuItem href='/card-basic' icon={<i className='ri-bar-chart-box-line' />}>
+          Cards
+        </MenuItem>
         <MenuSection label='Forms & Tables'>
           <MenuItem href='/form-layouts' icon={<i className='ri-layout-4-line' />}>
             Form Layouts

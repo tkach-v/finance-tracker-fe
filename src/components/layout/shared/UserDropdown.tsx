@@ -1,13 +1,10 @@
 'use client'
 
-// React Imports
 import { useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 
-// Next Imports
 import { useRouter } from 'next/navigation'
 
-// MUI Imports
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
@@ -20,8 +17,9 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
+import { logoutAction } from '@/utils/auth'
+import { useAppDispatch } from '@/store/hooks'
 
-// Styled component for badge content
 const BadgeContentSpan = styled('span')({
   width: 8,
   height: 8,
@@ -32,13 +30,11 @@ const BadgeContentSpan = styled('span')({
 })
 
 const UserDropdown = () => {
-  // States
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
 
-  // Refs
   const anchorRef = useRef<HTMLDivElement>(null)
 
-  // Hooks
   const router = useRouter()
 
   const handleDropdownOpen = () => {
@@ -102,21 +98,9 @@ const UserDropdown = () => {
                     </div>
                   </div>
                   <Divider className='mlb-1' />
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e)}>
+                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/account-settings')}>
                     <i className='ri-user-3-line' />
-                    <Typography color='text.primary'>My Profile</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e)}>
-                    <i className='ri-settings-4-line' />
-                    <Typography color='text.primary'>Settings</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e)}>
-                    <i className='ri-money-dollar-circle-line' />
-                    <Typography color='text.primary'>Pricing</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e)}>
-                    <i className='ri-question-line' />
-                    <Typography color='text.primary'>FAQ</Typography>
+                    <Typography color='text.primary'>Мій профіль</Typography>
                   </MenuItem>
                   <div className='flex items-center plb-2 pli-4'>
                     <Button
@@ -125,10 +109,13 @@ const UserDropdown = () => {
                       color='error'
                       size='small'
                       endIcon={<i className='ri-logout-box-r-line' />}
-                      onClick={e => handleDropdownClose(e, '/login')}
+                      onClick={e => {
+                        dispatch(logoutAction())
+                        handleDropdownClose(e, '/login')
+                      }}
                       sx={{ '& .MuiButton-endIcon': { marginInlineStart: 1.5 } }}
                     >
-                      Logout
+                      Вихід
                     </Button>
                   </div>
                 </MenuList>

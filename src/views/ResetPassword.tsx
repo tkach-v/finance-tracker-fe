@@ -8,34 +8,47 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 import type { Mode } from '@core/types'
-import DirectionalIcon from '@components/DirectionalIcon'
+
 import Illustrations from '@components/Illustrations'
 import Logo from '@components/layout/shared/Logo'
 
 import { useImageVariant } from '@/hooks/useImageVariant'
-import { useActions } from '@/hooks/useActions'
 import { useForm } from 'react-hook-form'
-import { ForgotPasswordRequest } from '@/api/types/auth'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useActions } from '@/hooks/useActions'
+import { useResetPasswordMutation } from '@/api/extendedApi'
+import { FormProvider } from '@components/HookForm'
+import { useRouter } from 'next/navigation'
+import { passwordSchema } from '@/types/yupSchemas'
+import RHFPassword from '@components/HookForm/RHFPassword'
 import * as yup from 'yup'
-import { emailSchema } from '@/types/yupSchemas'
-import { useForgotPasswordMutation } from '@/api/extendedApi'
-import { FormProvider, RHFTextField } from '@components/HookForm'
+import DirectionalIcon from '@components/DirectionalIcon'
 
 const darkImg = '/images/pages/auth-v1-mask-dark.png'
 const lightImg = '/images/pages/auth-v1-mask-light.png'
 
+type ResetPasswordInput = {
+  password: string
+}
+
 export const schema = yup.object({
-  email: emailSchema
+  password: passwordSchema
 })
 
-const ForgotPassword = ({ mode }: { mode: Mode }) => {
+type ResetPassword = {
+  mode: Mode
+  uid: string
+  token: string
+}
+
+const ResetPassword = ({ mode, uid, token }: ResetPassword) => {
   const { showSnackBar } = useActions()
+  const router = useRouter()
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
-  const methods = useForm<ForgotPasswordRequest>({
+  const methods = useForm<ResetPasswordInput>({
     resolver: yupResolver(schema),
-    defaultValues: { email: '' }
+    defaultValues: { password: '' }
   })
 
   const {
@@ -43,18 +56,23 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
     formState: { errors }
   } = methods
 
-  const [forgotPassword] = useForgotPasswordMutation()
+  const [resetPassword] = useResetPasswordMutation()
 
-  const onSubmit = async (data: ForgotPasswordRequest) => {
+  const onSubmit = async (data: ResetPasswordInput) => {
     try {
-      await forgotPassword(data).unwrap()
+      await resetPassword({
+        uid,
+        token,
+        new_password: data.password
+      }).unwrap()
       showSnackBar({
-        message: 'На вашу електронну пошту надіслано інструкції для скидання паролю.',
+        message: 'Пароль успішно оновлений. Ви можете увійти в свій обліковий запис.',
         type: 'success'
       })
+      router.replace('/login')
     } catch (error: any) {
       showSnackBar({
-        message: 'Не вдалося надіслати інструкції. Перевірте свою електронну пошту або спробуйте ще раз пізніше.',
+        message: `Не вдалося скинути пароль. ${error?.data?.detail || error?.data?.uid || error?.data?.token || error?.data?.new_password || 'Спробуйте ще раз пізніше.'}`,
         type: 'error'
       })
     }
@@ -64,25 +82,18 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
     <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
       <Card className='flex flex-col sm:is-[450px]'>
         <CardContent className='p-6 sm:!p-12'>
-          <Link href='/' className='flex justify-center items-center mbe-6'>
+          <Link href='/' className='flex justify-center items-start mbe-6'>
             <Logo />
           </Link>
-          <Typography variant='h4'>Забув пароль 🔒</Typography>
+          <Typography variant='h4'>Скинути пароль</Typography>
           <div className='flex flex-col gap-5'>
             <Typography className='mbs-1'>
-              Введи свою електронну пошту, та ми надішлемо тобі інструкції для зміни паролю
+              Введи новий пароль, який ти хочеш використовувати для свого облікового запису
             </Typography>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} formClassName={'flex flex-col gap-5'}>
-              <RHFTextField
-                name='email'
-                placeholder={'email@example.com'}
-                label='Електронна пошта'
-                fullWidth
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
+              <RHFPassword name='password' error={!!errors.password} helperText={errors.password?.message} />
               <Button fullWidth variant='contained' type='submit'>
-                Продовжити
+                Підтвердити
               </Button>
               <Typography className='flex justify-center items-center' color='primary'>
                 <Link href='/login' className='flex items-center'>
@@ -99,4 +110,4 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
   )
 }
 
-export default ForgotPassword
+export default ResetPassword

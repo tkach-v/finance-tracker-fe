@@ -5,17 +5,9 @@ import { Mutex } from 'async-mutex'
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 import { AUTH } from '@/api/index'
 import { TokenRefreshResponse } from '@/api/types/auth'
-import { extendedApi } from '@/api/extendedApi'
+import { logoutAction } from '@/utils/auth'
 
 const mutex = new Mutex()
-
-const logoutAction = () => (dispatch: any) => {
-  if (isClient()) {
-    localStorageService.logout()
-    dispatch(extendedApi.util.resetApiState())
-    dispatch(extendedApi.util.invalidateTags([{ type: TagTypes.CURRENT_USER }]))
-  }
-}
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_BASE_API_URL}`,

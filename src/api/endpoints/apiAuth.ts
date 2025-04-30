@@ -1,7 +1,7 @@
 import type { EndpointBuilder } from '@reduxjs/toolkit/query'
 
 import { AUTH } from '@/api'
-import { AuthRequest, LoginResponse } from '@/api/types/auth'
+import { AuthRequest, ForgotPasswordRequest, LoginResponse, ResetPasswordRequest } from '@/api/types/auth'
 import { TagTypes } from '@/utils/rtk-tags'
 
 export const apiAuth = {
@@ -21,6 +21,20 @@ export const apiAuth = {
         body
       }),
       invalidatesTags: [TagTypes.CURRENT_USER]
+    }),
+    forgotPassword: builder.mutation({
+      query: (body: ForgotPasswordRequest) => ({
+        url: AUTH.forgotPassword(),
+        method: 'POST',
+        body
+      })
+    }),
+    resetPassword: builder.mutation({
+      query: (body: ResetPasswordRequest) => ({
+        url: AUTH.resetPassword(),
+        method: 'POST',
+        body
+      })
     })
   })
 }
