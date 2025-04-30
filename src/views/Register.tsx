@@ -1,16 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-
 import Link from 'next/link'
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
-import * as yup from 'yup'
 
 import type { Mode } from '@core/types'
 
@@ -24,37 +19,31 @@ import { useActions } from '@/hooks/useActions'
 import { useRegisterMutation } from '@/api/extendedApi'
 import { FormProvider, RHFTextField } from '@components/HookForm'
 import { useRouter } from 'next/navigation'
+import { AuthRequest } from '@/api/types/auth'
+import { authSchema } from '@/types/yupSchemas'
+import RHFPassword from '@components/HookForm/RHFPassword'
 
-type RegisterFormInputs = {
-  email: string
-  password: string
-}
-
-const registerSchema = yup.object({
-  email: yup.string().email('Неправильна адреса електронної пошти').required("Адреса електронна пошта обов'язкова"),
-  password: yup
-    .string()
-    .required("Пароль обов'язковий")
-    .min(8, 'Довжина паролю повинна бути не менше 8 символів')
-    .max(50, 'Довжина паролю повинна бути не більше 50 символів')
-})
+const darkImg = '/images/pages/auth-v1-mask-dark.png'
+const lightImg = '/images/pages/auth-v1-mask-light.png'
 
 const Register = ({ mode }: { mode: Mode }) => {
   const { showSnackBar } = useActions()
   const router = useRouter()
+  const authBackground = useImageVariant(mode, lightImg, darkImg)
 
-  const methods = useForm<RegisterFormInputs>({
-    resolver: yupResolver(registerSchema),
+  const methods = useForm<AuthRequest>({
+    resolver: yupResolver(authSchema),
     defaultValues: { email: '', password: '' }
   })
+
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = methods
 
   const [register] = useRegisterMutation()
 
-  const onSubmit = async (data: RegisterFormInputs) => {
+  const onSubmit = async (data: AuthRequest) => {
     try {
       await register(data).unwrap()
       showSnackBar({
@@ -69,15 +58,6 @@ const Register = ({ mode }: { mode: Mode }) => {
       })
     }
   }
-
-  const [isPasswordShown, setIsPasswordShown] = useState(false)
-
-  const darkImg = '/images/pages/auth-v1-mask-dark.png'
-  const lightImg = '/images/pages/auth-v1-mask-light.png'
-
-  const authBackground = useImageVariant(mode, lightImg, darkImg)
-
-  const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   return (
     <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
@@ -98,30 +78,7 @@ const Register = ({ mode }: { mode: Mode }) => {
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
-              <RHFTextField
-                type={isPasswordShown ? 'text' : 'password'}
-                name='password'
-                placeholder={'password'}
-                variant='outlined'
-                label='Пароль'
-                fullWidth
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        size='small'
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={e => e.preventDefault()}
-                      >
-                        <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
+              <RHFPassword name='password' error={!!errors.password} helperText={errors.password?.message} />
               <Button fullWidth variant='contained' type='submit'>
                 Зареєструватися
               </Button>
