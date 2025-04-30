@@ -16,7 +16,7 @@ export const apiAuth = {
     }),
     register: builder.mutation({
       query: (body: AuthRequest) => ({
-        url: AUTH.login(),
+        url: AUTH.register(),
         method: 'POST',
         body
       }),

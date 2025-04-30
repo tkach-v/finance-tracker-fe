@@ -12,12 +12,13 @@ type Props = {
   onChange?: VoidFunction
   id?: string
   style?: CSSProperties
+  formClassName?: string
 }
 
-export default function FormProvider({ children, onSubmit, onChange, methods, id, style }: Props) {
+export default function FormProvider({ children, onSubmit, onChange, methods, id, style, formClassName }: Props) {
   return (
     <Form {...methods}>
-      <form id={id} style={style} autoComplete='false' onChange={onChange} onSubmit={onSubmit}>
+      <form id={id} style={style} autoComplete='false' onChange={onChange} onSubmit={onSubmit} className={formClassName}>
         {children}
       </form>
     </Form>

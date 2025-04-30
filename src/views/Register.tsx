@@ -7,7 +7,6 @@ import Link from 'next/link'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
@@ -19,9 +18,12 @@ import Illustrations from '@components/Illustrations'
 import Logo from '@components/layout/shared/Logo'
 
 import { useImageVariant } from '@/hooks/useImageVariant'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useActions } from '@/hooks/useActions'
+import { useRegisterMutation } from '@/api/extendedApi'
+import { FormProvider, RHFTextField } from '@components/HookForm'
+import { useRouter } from 'next/navigation'
 
 type RegisterFormInputs = {
   email: string
@@ -39,11 +41,34 @@ const registerSchema = yup.object({
 
 const Register = ({ mode }: { mode: Mode }) => {
   const { showSnackBar } = useActions()
+  const router = useRouter()
 
-  const {} = useForm<RegisterFormInputs>({
+  const methods = useForm<RegisterFormInputs>({
     resolver: yupResolver(registerSchema),
     defaultValues: { email: '', password: '' }
   })
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods
+
+  const [register] = useRegisterMutation()
+
+  const onSubmit = async (data: RegisterFormInputs) => {
+    try {
+      await register(data).unwrap()
+      showSnackBar({
+        message: 'Реєстрація пройшла успішно. Тепер ви можете увійти в свій обліковий запис.',
+        type: 'success'
+      })
+      router.replace('/login')
+    } catch (error: any) {
+      showSnackBar({
+        message: `Не вдалося зареєструватися. ${error?.data?.detail || error?.data?.email || error?.data?.password || 'Спробуйте ще раз пізніше.'}`,
+        type: 'error'
+      })
+    }
+  }
 
   const [isPasswordShown, setIsPasswordShown] = useState(false)
 
@@ -64,12 +89,24 @@ const Register = ({ mode }: { mode: Mode }) => {
           <Typography variant='h4'>Зареєструйся 🚀</Typography>
           <div className='flex flex-col gap-5'>
             <Typography className='mbs-1'>Введи свої дані, щоб створити обліковий запис</Typography>
-            <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()} className='flex flex-col gap-5'>
-              <TextField fullWidth label='Електронна пошта' />
-              <TextField
+            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} formClassName={'flex flex-col gap-5'}>
+              <RHFTextField
+                name='email'
+                placeholder={'email@example.com'}
+                label='Електронна пошта'
                 fullWidth
-                label='Пароль'
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+              <RHFTextField
                 type={isPasswordShown ? 'text' : 'password'}
+                name='password'
+                placeholder={'password'}
+                variant='outlined'
+                label='Пароль'
+                fullWidth
+                error={!!errors.password}
+                helperText={errors.password?.message}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
@@ -93,7 +130,7 @@ const Register = ({ mode }: { mode: Mode }) => {
                   Уже маєш обліковий запис?
                 </Typography>
               </div>
-            </form>
+            </FormProvider>
           </div>
         </CardContent>
       </Card>

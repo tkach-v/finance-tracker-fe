@@ -8,12 +8,17 @@ import Navigation from '@components/layout/vertical/Navigation'
 import Navbar from '@components/layout/vertical/Navbar'
 import { useRouter } from 'next/navigation'
 import { useCurrentUser } from '@/hooks/api/useCurrentUser'
+import { useEffect } from 'react'
 
 const Layout = ({ children }: ChildrenType) => {
   const router = useRouter()
   const { user, isLoading } = useCurrentUser()
 
-  if (!isLoading && !user) return router.replace('/login')
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace('/login')
+    }
+  }, [isLoading, user, router])
 
   if (isLoading || !user) {
     return null

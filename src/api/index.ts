@@ -1,6 +1,7 @@
 export const AUTH = {
+  register: () => '/users/',
   login: () => '/jwt/create/',
-  register: () => '/users/'
+  refreshToken: () => '/jwt/refresh/'
 }
 
 export const USERS = {
