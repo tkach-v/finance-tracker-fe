@@ -4,7 +4,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
 
-import { Menu, MenuItem, MenuSection } from '@menu/vertical-menu'
+import { Menu, MenuItem } from '@menu/vertical-menu'
 
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 
@@ -12,6 +12,7 @@ import StyledVerticalNavExpandIcon from '@menu/styles/vertical/StyledVerticalNav
 
 import menuItemStyles from '@core/styles/vertical/menuItemStyles'
 import menuSectionStyles from '@core/styles/vertical/menuSectionStyles'
+import Divider from '@mui/material/Divider'
 
 type RenderExpandIconProps = {
   open?: boolean
@@ -25,7 +26,6 @@ const RenderExpandIcon = ({ open, transitionDuration }: RenderExpandIconProps) =
 )
 
 const VerticalMenu = ({ scrollMenu }: { scrollMenu: (container: any, isPerfectScrollbar: boolean) => void }) => {
-  // Hooks
   const theme = useTheme()
   const { isBreakpointReached, transitionDuration } = useVerticalNav()
 
@@ -51,17 +51,25 @@ const VerticalMenu = ({ scrollMenu }: { scrollMenu: (container: any, isPerfectSc
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(theme)}
       >
+        <Divider sx={{ mb: 5 }} />
+        <MenuItem href='/' icon={<i className='ri-home-9-line' />}>
+          Головна
+        </MenuItem>
+        <MenuItem href='/accounts' icon={<i className='ri-wallet-line' />}>
+          Рахунки
+        </MenuItem>
+        <MenuItem href='/charts' icon={<i className='ri-bar-chart-2-line' />}>
+          Діаграми
+        </MenuItem>
+        <MenuItem href='/categories' icon={<i className='ri-shapes-line' />}>
+          Категорії
+        </MenuItem>
+        <MenuItem href='/transactions' icon={<i className='ri-exchange-line' />}>
+          Транзакції
+        </MenuItem>
         <MenuItem href='/account-settings' icon={<i className='ri-user-settings-line' />}>
-          Account Settings
+          Налаштування
         </MenuItem>
-        <MenuItem href='/card-basic' icon={<i className='ri-bar-chart-box-line' />}>
-          Cards
-        </MenuItem>
-        <MenuSection label='Forms & Tables'>
-          <MenuItem href='/form-layouts' icon={<i className='ri-layout-4-line' />}>
-            Form Layouts
-          </MenuItem>
-        </MenuSection>
       </Menu>
     </ScrollWrapper>
   )

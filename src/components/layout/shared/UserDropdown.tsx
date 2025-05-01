@@ -19,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 import { logoutAction } from '@/utils/auth'
 import { useAppDispatch } from '@/store/hooks'
+import { useCurrentUser } from '@/hooks/api/useCurrentUser'
 
 const BadgeContentSpan = styled('span')({
   width: 8,
@@ -31,6 +32,9 @@ const BadgeContentSpan = styled('span')({
 
 const UserDropdown = () => {
   const dispatch = useAppDispatch()
+
+  const { user } = useCurrentUser()
+
   const [open, setOpen] = useState(false)
 
   const anchorRef = useRef<HTMLDivElement>(null)
@@ -92,9 +96,8 @@ const UserDropdown = () => {
                     <Avatar alt='John Doe' src='/images/avatars/1.png' />
                     <div className='flex items-start flex-col'>
                       <Typography className='font-medium' color='text.primary'>
-                        John Doe
+                        {user.email}
                       </Typography>
-                      <Typography variant='caption'>Admin</Typography>
                     </div>
                   </div>
                   <Divider className='mlb-1' />
