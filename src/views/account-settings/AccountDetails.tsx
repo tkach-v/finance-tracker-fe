@@ -1,115 +1,103 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { UpdateUserRequest } from '@/api/types/users'
+import { useCurrentUser } from '@/hooks/api/useCurrentUser'
+import { FormProvider, RHFTextField } from '@components/HookForm'
+import { useUpdateUserMutation } from '@/api/extendedApi'
+import { useActions } from '@/hooks/useActions'
 
-type Data = {
-  firstName: string
-  lastName: string
-  timezone: string
-  currency: string
-}
-
-const initialData: Data = {
-  firstName: 'John',
-  lastName: 'Doe',
-  timezone: 'gmt-12',
-  currency: 'usd'
-}
+const schema = yup.object({
+  first_name: yup.string(),
+  last_name: yup.string()
+})
 
 const AccountDetails = () => {
-  const [formData, setFormData] = useState<Data>(initialData)
+  const { showSnackBar } = useActions()
 
-  const handleFormChange = (field: keyof Data, value: Data[keyof Data]) => {
-    setFormData({ ...formData, [field]: value })
+  const { user } = useCurrentUser()
+
+  const defaultValues: UpdateUserRequest = useMemo(() => {
+    return {
+      first_name: user?.first_name,
+      last_name: user?.last_name
+    }
+  }, [user])
+
+  const methods = useForm<UpdateUserRequest>({
+    resolver: yupResolver(schema),
+    defaultValues
+  })
+
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors, isDirty }
+  } = methods
+
+  const [updateUser] = useUpdateUserMutation()
+
+  const onSubmit = async (data: UpdateUserRequest) => {
+    try {
+      await updateUser(data).unwrap()
+
+      showSnackBar({
+        message: 'Дані успішно змінено.',
+        type: 'success'
+      })
+    } catch (error: any) {
+      showSnackBar({
+        message: `Не вдалося змінити дані користувача. Спробуйте ще раз пізніше.'}`,
+        type: 'error'
+      })
+    }
   }
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   return (
     <Card>
       <CardContent>
-        <form onSubmit={e => e.preventDefault()}>
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <RHFTextField
+                name='first_name'
+                label="Ім'я"
                 fullWidth
-                label='First Name'
-                value={formData.firstName}
-                placeholder='John'
-                onChange={e => handleFormChange('firstName', e.target.value)}
+                error={!!errors.first_name}
+                helperText={errors.first_name?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <RHFTextField
+                name='last_name'
+                label='Прізвище'
                 fullWidth
-                label='Last Name'
-                value={formData.lastName}
-                placeholder='Doe'
-                onChange={e => handleFormChange('lastName', e.target.value)}
+                error={!!errors.last_name}
+                helperText={errors.last_name?.message}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>TimeZone</InputLabel>
-                <Select
-                  label='TimeZone'
-                  value={formData.timezone}
-                  onChange={e => handleFormChange('timezone', e.target.value)}
-                  MenuProps={{ PaperProps: { style: { maxHeight: 250 } } }}
-                >
-                  <MenuItem value='gmt-12'>(GMT-12:00) International Date Line West</MenuItem>
-                  <MenuItem value='gmt-11'>(GMT-11:00) Midway Island, Samoa</MenuItem>
-                  <MenuItem value='gmt-10'>(GMT-10:00) Hawaii</MenuItem>
-                  <MenuItem value='gmt-09'>(GMT-09:00) Alaska</MenuItem>
-                  <MenuItem value='gmt-08'>(GMT-08:00) Pacific Time (US & Canada)</MenuItem>
-                  <MenuItem value='gmt-08-baja'>(GMT-08:00) Tijuana, Baja California</MenuItem>
-                  <MenuItem value='gmt-07'>(GMT-07:00) Chihuahua, La Paz, Mazatlan</MenuItem>
-                  <MenuItem value='gmt-07-mt'>(GMT-07:00) Mountain Time (US & Canada)</MenuItem>
-                  <MenuItem value='gmt-06'>(GMT-06:00) Central America</MenuItem>
-                  <MenuItem value='gmt-06-ct'>(GMT-06:00) Central Time (US & Canada)</MenuItem>
-                  <MenuItem value='gmt-06-mc'>(GMT-06:00) Guadalajara, Mexico City, Monterrey</MenuItem>
-                  <MenuItem value='gmt-06-sk'>(GMT-06:00) Saskatchewan</MenuItem>
-                  <MenuItem value='gmt-05'>(GMT-05:00) Bogota, Lima, Quito, Rio Branco</MenuItem>
-                  <MenuItem value='gmt-05-et'>(GMT-05:00) Eastern Time (US & Canada)</MenuItem>
-                  <MenuItem value='gmt-05-ind'>(GMT-05:00) Indiana (East)</MenuItem>
-                  <MenuItem value='gmt-04'>(GMT-04:00) Atlantic Time (Canada)</MenuItem>
-                  <MenuItem value='gmt-04-clp'>(GMT-04:00) Caracas, La Paz</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Currency</InputLabel>
-                <Select
-                  label='Currency'
-                  value={formData.currency}
-                  onChange={e => handleFormChange('currency', e.target.value)}
-                >
-                  <MenuItem value='usd'>USD</MenuItem>
-                  <MenuItem value='euro'>EUR</MenuItem>
-                  <MenuItem value='pound'>Pound</MenuItem>
-                  <MenuItem value='bitcoin'>Bitcoin</MenuItem>
-                </Select>
-              </FormControl>
             </Grid>
             <Grid item xs={12} className='flex gap-4 flex-wrap'>
-              <Button variant='contained' type='submit'>
-                Save Changes
+              <Button variant='contained' type='submit' disabled={!isDirty}>
+                Зберегти
               </Button>
-              <Button variant='outlined' type='reset' color='secondary' onClick={() => setFormData(initialData)}>
-                Reset
+              <Button variant='outlined' type='reset' color='secondary' onClick={() => reset(defaultValues)}>
+                Скинути
               </Button>
             </Grid>
           </Grid>
-        </form>
+        </FormProvider>
       </CardContent>
     </Card>
   )
