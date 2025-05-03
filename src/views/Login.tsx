@@ -51,8 +51,8 @@ const Login = ({ mode }: { mode: Mode }) => {
       const response = await login(data).unwrap()
 
       if (response) {
-        localStorageService.setAccessToken(response.access);
-        localStorageService.setRefreshToken(response.refresh);
+        localStorageService.setAccessToken(response.access)
+        localStorageService.setRefreshToken(response.refresh)
         router.replace('/')
       }
     } catch (error: any) {

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 
 type PageProps = {
   searchParams: {
-    uid?: string;
+    uid?: string
     token?: string
   }
 }

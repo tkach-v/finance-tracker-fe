@@ -1,6 +1,9 @@
 import * as yup from 'yup'
 
-export const emailSchema = yup.string().email('Неправильна адреса електронної пошти').required("Адреса електронна пошта обов'язкова")
+export const emailSchema = yup
+  .string()
+  .email('Неправильна адреса електронної пошти')
+  .required("Адреса електронна пошта обов'язкова")
 export const passwordSchema = yup
   .string()
   .required("Пароль обов'язковий")

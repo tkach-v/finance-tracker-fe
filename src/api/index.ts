@@ -3,7 +3,7 @@ export const AUTH = {
   login: () => '/jwt/create/',
   refreshToken: () => '/jwt/refresh/',
   forgotPassword: () => '/users/reset_password/',
-  resetPassword: () => '/users/reset_password_confirm/',
+  resetPassword: () => '/users/reset_password_confirm/'
 }
 
 export const USERS = {

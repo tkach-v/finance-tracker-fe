@@ -8,7 +8,6 @@ module.exports = {
     '@next/next/no-page-custom-font': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'lines-around-comment': [
       'error',

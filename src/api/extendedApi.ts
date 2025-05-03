@@ -10,5 +10,7 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
 
-  useGetCurrentUserQuery
+  useGetCurrentUserQuery,
+  useDeleteUserMutation,
+  useUpdateUserMutation
 } = extendedApi

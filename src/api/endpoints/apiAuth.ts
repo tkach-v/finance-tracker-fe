@@ -7,7 +7,7 @@ import { TagTypes } from '@/utils/rtk-tags'
 export const apiAuth = {
   endpoints: (builder: EndpointBuilder<any, any, any>) => ({
     login: builder.mutation<LoginResponse, AuthRequest>({
-      query: (body) => ({
+      query: body => ({
         url: AUTH.login(),
         method: 'POST',
         body
