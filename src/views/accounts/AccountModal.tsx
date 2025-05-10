@@ -1,18 +1,18 @@
 import React from 'react'
 import ModalContainer from '@components/modal/ModalContainer'
-import { FormProvider, RHFTextField } from '@components/HookForm'
+import { FormProvider, RHFSelect, RHFTextField } from '@components/HookForm'
 import { Modal, Stack } from '@mui/material'
 import { useCreateAccountMutation, useDeleteAccountMutation, useUpdateAccountMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { CreateCategoryRequest } from '@/api/types/categories'
 import Typography from '@mui/material/Typography'
 import ColorPicker from '@components/ColorPicker'
 import Button from '@mui/material/Button'
 import { Account } from '@/types/accounts'
 import { CreateAccountRequest } from '@/api/types/accounts'
+import CurrenciesSelectOptions from '@components/CurrenciesSelectOptions'
 
 type Props = {
   open: boolean
@@ -22,7 +22,12 @@ type Props = {
 
 const schema = yup.object({
   name: yup.string().required('Введіть назву рахунку'),
-  color: yup.string().required('Виберіть колір рахунку')
+  color: yup.string().required('Виберіть колір рахунку'),
+  balance: yup
+    .string()
+    .required('Введіть баланс рахунку у вибраній валюті')
+    .matches(/^\d{1,20}(?:\.\d{1,10})?$/, 'Баланс може містити до 20 цифр до коми та до 10 після коми'),
+  currency: yup.string().required('Виберіть валюту для рахунку')
 })
 
 const AccountModal = ({ open, onClose, account }: Props) => {
@@ -30,7 +35,9 @@ const AccountModal = ({ open, onClose, account }: Props) => {
 
   const defaultValues = {
     name: account?.name || '',
-    color: account?.color || '#CCCCCC'
+    color: account?.color || '#CCCCCC',
+    balance: account?.balance || '0.00',
+    currency: account?.currency || 'usd'
   }
 
   const methods = useForm<CreateAccountRequest>({
@@ -54,7 +61,7 @@ const AccountModal = ({ open, onClose, account }: Props) => {
     onClose()
   }
 
-  const onSubmit = async (data: CreateCategoryRequest) => {
+  const onSubmit = async (data: CreateAccountRequest) => {
     try {
       if (account) {
         await updateAccount({ id: account.id, body: data }).unwrap()
@@ -108,6 +115,17 @@ const AccountModal = ({ open, onClose, account }: Props) => {
             />
           </Stack>
           <RHFTextField name='name' label='Назва' fullWidth error={!!errors.name} helperText={errors.name?.message} />
+          <RHFTextField
+            type='number'
+            name='balance'
+            label='Баланс'
+            fullWidth
+            error={!!errors.balance}
+            helperText={errors.balance?.message}
+          />
+          <RHFSelect name='currency' label='Валюта' fullWidth disabled={!!account}>
+            <CurrenciesSelectOptions />
+          </RHFSelect>
           <Stack direction={'row'} justifyContent={'end'} gap={'8px'} mt={'24px'}>
             {account && (
               <Button

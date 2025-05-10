@@ -34,7 +34,7 @@ const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        zIndex: 1000,
+        zIndex: 1000
       }}
     >
       <Box

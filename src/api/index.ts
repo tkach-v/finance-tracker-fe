@@ -19,3 +19,7 @@ export const ACCOUNTS = {
   all: () => '/accounts/',
   byId: (id: number) => `/accounts/${id}/`
 }
+
+export const CURRENCIES = {
+  all: () => '/currencies/'
+}
