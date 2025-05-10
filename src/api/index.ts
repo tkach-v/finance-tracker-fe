@@ -9,3 +9,8 @@ export const AUTH = {
 export const USERS = {
   current: () => '/users/me/'
 }
+
+export const CATEGORIES = {
+  all: () => '/categories/',
+  byId: (id: string) => `/categories/${id}/`,
+}

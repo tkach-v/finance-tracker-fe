@@ -1,7 +1,7 @@
-import AccountSettings from '@views/account-settings'
+import Categories from '@views/categories'
 
 const CategoriesPage = () => {
-  return <AccountSettings />
+  return <Categories />
 }
 
 export default CategoriesPage

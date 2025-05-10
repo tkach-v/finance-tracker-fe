@@ -1,8 +1,9 @@
 import { BaseApi } from '@/api/_base.api'
 import { apiAuth } from '@/api/endpoints/apiAuth'
 import { apiUsers } from '@/api/endpoints/apiUsers'
+import { apiCategories } from '@/api/endpoints/apiCategories'
 
-export const extendedApi = BaseApi.injectEndpoints(apiAuth).injectEndpoints(apiUsers)
+export const extendedApi = BaseApi.injectEndpoints(apiAuth).injectEndpoints(apiUsers).injectEndpoints(apiCategories)
 
 export const {
   useLoginMutation,
@@ -12,5 +13,10 @@ export const {
 
   useGetCurrentUserQuery,
   useDeleteUserMutation,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+
+  useGetCategoriesQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
 } = extendedApi
