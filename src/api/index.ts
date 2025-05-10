@@ -14,3 +14,8 @@ export const CATEGORIES = {
   all: () => '/categories/',
   byId: (id: number) => `/categories/${id}/`
 }
+
+export const ACCOUNTS = {
+  all: () => '/accounts/',
+  byId: (id: number) => `/accounts/${id}/`
+}

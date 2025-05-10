@@ -3,7 +3,7 @@ import { Category, CategoryTypes } from '@/types/categories'
 import ModalContainer from '@components/modal/ModalContainer'
 import { FormProvider, RHFTextField } from '@components/HookForm'
 import { Modal, Stack } from '@mui/material'
-import { useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } from '@/api/extendedApi'
+import { useCreateCategoryMutation, useUpdateCategoryMutation, useDeleteCategoryMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
 import { Controller, useForm } from 'react-hook-form'
@@ -28,10 +28,10 @@ const schema = yup.object({
     .string()
     .nullable()
     .transform(val => (val === '' ? null : val))
-    .matches(/^(?:\d{1,13})(?:\.\d{1,2})?$/, 'Число повинно мати до 13 цифр перед комою та до 2 після')
+    .matches(/^(?:\d{1,13})(?:\.\d{1,2})?$/, 'Ліміт бюджету повинен мати до 13 цифр перед комою та до 2 після')
 })
 
-const CategoryModal = ({ open, onClose, category, type }: Props) => {
+const AccountModal = ({ open, onClose, category, type }: Props) => {
   const { showSnackBar } = useActions()
 
   const categoryType = category?.type || type || CategoryTypes.EXPENSE
@@ -120,7 +120,7 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
           <RHFTextField name='name' label='Назва' fullWidth error={!!errors.name} helperText={errors.name?.message} />
           <RHFTextField
             name='budget_limit'
-            label={type === CategoryTypes.EXPENSE ? 'Прогнозовані витрати ($)' : 'Прогнозований дохід ($)'}
+            label='Ліміт бюджету'
             fullWidth
             error={!!errors.budget_limit}
             helperText={errors.budget_limit?.message}
@@ -149,4 +149,4 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
   )
 }
 
-export default CategoryModal
+export default AccountModal

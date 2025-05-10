@@ -1,27 +1,29 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Category, CategoryTypes } from '@/types/categories'
+import { Category } from '@/types/categories'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material'
 import CategoryModal from '@views/categories/CategoryModal'
+import { Account } from '@/types/accounts'
+import AccountModal from '@views/accounts/AccountModal'
 
 type Props = {
-  category: Category
+  account: Account
 }
 
-const CategoryItem = ({ category }: Props) => {
+const AccountItem = ({ account }: Props) => {
   const theme = useTheme()
-  const contrastText = theme.palette.getContrastText(category.color)
+  const contrastText = theme.palette.getContrastText(account.color)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const onClose = () => setIsModalOpen(false)
 
   return (
     <>
-      <CategoryModal open={isModalOpen} onClose={onClose} category={category} />
+      <AccountModal open={isModalOpen} onClose={onClose} category={account} />
       <Card
         sx={{
           height: '100%',
@@ -42,8 +44,7 @@ const CategoryItem = ({ category }: Props) => {
             {category.name}
           </Typography>
           <Typography sx={{ color: contrastText }}>
-            <b>{category.type === CategoryTypes.INCOME ? 'Прогнозований дохід' : 'Прогрозовані витрати'}: </b>
-            {category.budget_limit !== null ? `$${category.budget_limit}` : 'не встановлено'}
+            <b>Ліміт бюджету:</b> {category.budget_limit !== null ? `$${category.budget_limit}` : 'не встановлено'}
           </Typography>
         </CardContent>
       </Card>
@@ -51,4 +52,4 @@ const CategoryItem = ({ category }: Props) => {
   )
 }
 
-export default CategoryItem
+export default AccountItem
