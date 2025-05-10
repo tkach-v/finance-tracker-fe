@@ -92,14 +92,8 @@ const AccountDetails = () => {
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Основна валюта</InputLabel>
-                <Select
-                  label='Основна валюта'
-                  value={'USD'}
-                  disabled
-                >
-                  <MenuItem value='USD'>
-                    USD (Долар США)
-                  </MenuItem>
+                <Select label='Основна валюта' value={'USD'} disabled>
+                  <MenuItem value='USD'>USD (Долар США)</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

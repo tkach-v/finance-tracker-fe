@@ -1,53 +1,50 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { HexColorPicker } from "react-colorful";
-import { Box } from "@mui/material";
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import { HexColorPicker } from 'react-colorful'
+import { Box } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 type Props = {
-  onChange: (value: string) => void;
-  value: string;
-};
+  onChange: (value: string) => void
+  value: string
+}
 
 const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
   const theme = useTheme()
 
-  const [displayPicker, setDisplayPicker] = useState<boolean>(false);
-  const pickerRef = useRef<HTMLDivElement>(null);
+  const [displayPicker, setDisplayPicker] = useState<boolean>(false)
+  const pickerRef = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      pickerRef.current &&
-      !pickerRef.current.contains(event.target as Node)
-    ) {
-      setDisplayPicker(false);
+    if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
+      setDisplayPicker(false)
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <Box
       sx={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start'
       }}
     >
       <Box
         sx={{
-          width: "30px",
-          height: "30px",
-          cursor: "pointer",
+          width: '30px',
+          height: '30px',
+          cursor: 'pointer',
           border: `1px solid ${theme.palette.divider}`,
-          borderRadius: "3px",
-          background: "transparent",
-          p: "3px",
+          borderRadius: '3px',
+          background: 'transparent',
+          p: '3px'
         }}
         color={value}
         onClick={() => setDisplayPicker(!displayPicker)}
@@ -55,21 +52,18 @@ const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
         <Box
           sx={{
             background: value,
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%'
           }}
         />
       </Box>
       {displayPicker && (
-        <Box
-          ref={pickerRef}
-          sx={{ position: "absolute", zIndex: 1000, left: 0, top: "40px" }}
-        >
+        <Box ref={pickerRef} sx={{ position: 'absolute', zIndex: 1000, left: 0, top: '40px' }}>
           <HexColorPicker color={value} onChange={onChange} />
         </Box>
       )}
     </Box>
-  );
-});
+  )
+})
 
-export default ColorPicker;
+export default ColorPicker

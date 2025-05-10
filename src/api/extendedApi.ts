@@ -18,5 +18,5 @@ export const {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
-  useDeleteCategoryMutation,
+  useDeleteCategoryMutation
 } = extendedApi

@@ -12,5 +12,5 @@ export const USERS = {
 
 export const CATEGORIES = {
   all: () => '/categories/',
-  byId: (id: string) => `/categories/${id}/`,
+  byId: (id: number) => `/categories/${id}/`
 }

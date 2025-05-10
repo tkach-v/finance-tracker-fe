@@ -19,10 +19,7 @@ export const apiCategories = {
       }),
       invalidatesTags: () => [{ type: TagTypes.CATEGORIES }]
     }),
-    updateCategory: builder.mutation<
-      Category,
-      { id: string; body: Partial<CreateCategoryRequest> }
-    >({
+    updateCategory: builder.mutation<Category, { id: number; body: Partial<CreateCategoryRequest> }>({
       query: ({ id, body }) => ({
         url: CATEGORIES.byId(id),
         method: 'PATCH',
@@ -30,12 +27,12 @@ export const apiCategories = {
       }),
       invalidatesTags: () => [{ type: TagTypes.CATEGORIES }]
     }),
-    deleteCategory: builder.mutation<void, string>({
-      query: (id) => ({
+    deleteCategory: builder.mutation<void, number>({
+      query: id => ({
         url: CATEGORIES.byId(id),
-        method: 'DELETE',
+        method: 'DELETE'
       }),
       invalidatesTags: () => [{ type: TagTypes.CATEGORIES }]
-    }),
+    })
   })
 }

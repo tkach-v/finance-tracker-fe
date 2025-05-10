@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CategoryTypes } from '@/types/categories'
 import AddButton from '@components/AddButton'
-import AddCategoryModal from '@views/categories/AddCategory/AddCategoryModal'
+import CategoryModal from '@views/categories/CategoryModal'
 
 type Props = {
   type: CategoryTypes
@@ -14,7 +14,7 @@ const AddCategoryButton = ({ type }: Props) => {
 
   return (
     <>
-      <AddCategoryModal open={isModalOpen} onClose={onClose} type={type} />
+      <CategoryModal open={isModalOpen} onClose={onClose} type={type} />
       <AddButton onClick={() => setIsModalOpen(true)} />
     </>
   )
