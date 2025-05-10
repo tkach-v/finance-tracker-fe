@@ -32,7 +32,7 @@ const AccountsList = ({ accounts }: Props) => {
                 maxWidth: '400px'
               }}
             >
-              {/*<AccountItem account={account} />*/}
+              <AccountItem account={account} />
             </Box>
           ))}
         </Box>

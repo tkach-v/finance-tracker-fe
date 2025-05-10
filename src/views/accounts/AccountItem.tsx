@@ -1,12 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Category } from '@/types/categories'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material'
-import CategoryModal from '@views/categories/CategoryModal'
 import { Account } from '@/types/accounts'
 import AccountModal from '@views/accounts/AccountModal'
 
@@ -23,28 +21,18 @@ const AccountItem = ({ account }: Props) => {
 
   return (
     <>
-      <AccountModal open={isModalOpen} onClose={onClose} category={account} />
+      <AccountModal open={isModalOpen} onClose={onClose} account={account} />
       <Card
         sx={{
           height: '100%',
-          backgroundColor: category.color,
+          backgroundColor: account.color,
           cursor: 'pointer'
         }}
         onClick={() => setIsModalOpen(true)}
       >
-        <CardContent
-          sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant='h5' mb={3} sx={{ color: contrastText }}>
-            {category.name}
-          </Typography>
-          <Typography sx={{ color: contrastText }}>
-            <b>Ліміт бюджету:</b> {category.budget_limit !== null ? `$${category.budget_limit}` : 'не встановлено'}
+        <CardContent sx={{ height: '100%' }}>
+          <Typography variant='h5' sx={{ color: contrastText }}>
+            {account.name}
           </Typography>
         </CardContent>
       </Card>

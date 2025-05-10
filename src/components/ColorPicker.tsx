@@ -33,7 +33,8 @@ const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        zIndex: 1000,
       }}
     >
       <Box
@@ -58,7 +59,7 @@ const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
         />
       </Box>
       {displayPicker && (
-        <Box ref={pickerRef} sx={{ position: 'absolute', zIndex: 1000, left: 0, top: '40px' }}>
+        <Box ref={pickerRef} sx={{ position: 'absolute', zIndex: 1000, left: '40px', top: 0 }}>
           <HexColorPicker color={value} onChange={onChange} />
         </Box>
       )}
