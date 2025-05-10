@@ -6,7 +6,7 @@ import { Modal, Stack } from '@mui/material'
 import { useCreateCategoryMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CreateCategoryRequest } from '@/api/types/categories'
 import AddButton from '@components/AddButton'
@@ -23,7 +23,6 @@ const schema = yup.object({
   name: yup.string().required('Введіть назву категорії'),
   type: yup.string().required('Виберіть тип категорії'),
   color: yup.string().required('Виберіть колір категорії'),
-  icon: yup.string().required('Виберіть іконку категорії'),
   budget_limit: yup
     .string()
     .nullable()
@@ -38,7 +37,6 @@ const AddCategoryButton = ({ open, onClose, type }: Props) => {
     name: '',
     type,
     color: '#CCCCCC',
-    icon: 'test-icon-1',
     budget_limit: null
   }
 
@@ -49,6 +47,8 @@ const AddCategoryButton = ({ open, onClose, type }: Props) => {
 
   const {
     handleSubmit,
+    control,
+    reset,
     formState: { errors }
   } = methods
 
@@ -56,14 +56,21 @@ const AddCategoryButton = ({ open, onClose, type }: Props) => {
 
   const onSubmit = async (data: CreateCategoryRequest) => {
     try {
-      console.log(data)
-
-      // await createCategory({}).unwrap()
-    } catch (error) {
-      showSnackBar({
-        message: 'Не вдалося створити категорію. Спробуйте ще раз пізніше.',
-        type: 'error'
-      })
+      await createCategory(data).unwrap()
+      reset(defaultValues)
+      onClose()
+    } catch (error: any) {
+      if (error.data && error.data.non_field_errors) {
+        showSnackBar({
+          message: 'Категорія з такою назвою вже існує. Введіть іншу назву та спробуйте ще раз.',
+          type: 'error'
+        })
+      } else {
+        showSnackBar({
+          message: 'Не вдалося створити категорію. Спробуйте ще раз пізніше.',
+          type: 'error'
+        })
+      }
     }
   }
 
@@ -72,18 +79,27 @@ const AddCategoryButton = ({ open, onClose, type }: Props) => {
       <ModalContainer
         close={onClose}
         title={`Додати категорію ${type === CategoryTypes.INCOME ? 'доходів' : 'витрат'}`}
-        sx={{ width: '100%', maxWidth: '600px' }}
+        sx={{ width: '100%', maxWidth: '500px' }}
       >
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} formClassName={'flex flex-col gap-5 w-full'}>
-          <RHFTextField name='name' label='Назва' fullWidth error={!!errors.name} helperText={errors.name?.message} />
-          <Stack direction={'row'} gap={'16px'} justifyContent={'space-between'}>
-            <Typography>
-              Обери колір для категорії
-            </Typography>
-            {/*<ColorPicker onChange={} value={} />*/}
+          <Stack direction={'row'} gap={'16px'} alignItems={'center'}>
+            <Typography>Колір категорії:</Typography>
+            <Controller
+              name='color'
+              control={control}
+              render={({ field }) => <ColorPicker value={field.value} onChange={field.onChange} />}
+            />
           </Stack>
-
-          <Stack direction={'row'} justifyContent={'end'} gap={'8px'}>
+          <RHFTextField name='name' label='Назва' fullWidth error={!!errors.name} helperText={errors.name?.message} />
+          <RHFTextField
+            name='budget_limit'
+            label='Ліміт бюджету'
+            fullWidth
+            error={!!errors.budget_limit}
+            helperText={errors.budget_limit?.message}
+            type={'number'}
+          />
+          <Stack direction={'row'} justifyContent={'end'} gap={'8px'} mt={'32px'}>
             <AddButton variant='contained' type='submit' />
           </Stack>
         </FormProvider>

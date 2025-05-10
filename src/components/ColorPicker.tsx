@@ -63,7 +63,7 @@ const ColorPicker = forwardRef(({ onChange, value }: Props, ref) => {
       {displayPicker && (
         <Box
           ref={pickerRef}
-          sx={{ position: "absolute", zIndex: 1000, right: 0, top: "50px" }}
+          sx={{ position: "absolute", zIndex: 1000, left: 0, top: "40px" }}
         >
           <HexColorPicker color={value} onChange={onChange} />
         </Box>
