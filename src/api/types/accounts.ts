@@ -1,6 +1,6 @@
 export type CreateAccountRequest = {
   name: string
   color: string
-  balance: number
+  balance: string
   currency: string
 }

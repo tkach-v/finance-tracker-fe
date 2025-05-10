@@ -40,7 +40,7 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
     name: category?.name || '',
     type: categoryType,
     color: category?.color || '#CCCCCC',
-    budget_limit: category?.budget_limit || null
+    budget_limit: category?.budget_limit?.toString() || null
   }
 
   const methods = useForm<CreateCategoryRequest>({

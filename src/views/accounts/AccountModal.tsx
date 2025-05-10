@@ -36,7 +36,7 @@ const AccountModal = ({ open, onClose, account }: Props) => {
   const defaultValues = {
     name: account?.name || '',
     color: account?.color || '#CCCCCC',
-    balance: account?.balance || '0.00',
+    balance: account?.balance.toString() || '0.00',
     currency: account?.currency || 'usd'
   }
 
