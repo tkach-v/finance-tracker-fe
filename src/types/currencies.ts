@@ -1,5 +1,5 @@
 export type Currency = {
-  id: number
+  id: string
   name: string
   symbol: string
   current_price: number

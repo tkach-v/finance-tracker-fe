@@ -38,7 +38,7 @@ const CategoryItem = ({ category }: Props) => {
             justifyContent: 'space-between'
           }}
         >
-          <Typography variant='h5' mb={3} sx={{ color: contrastText }}>
+          <Typography variant='h5' sx={{ color: contrastText, mb: 2 }}>
             {category.name}
           </Typography>
           <Typography sx={{ color: contrastText }}>

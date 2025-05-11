@@ -23,3 +23,8 @@ export const ACCOUNTS = {
 export const CURRENCIES = {
   all: () => '/currencies/'
 }
+
+export const TRANSACTIONS = {
+  all: () => '/transactions/',
+  byId: (id: number) => `/transactions/${id}/`
+}

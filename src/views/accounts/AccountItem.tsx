@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material'
 import { Account } from '@/types/accounts'
 import AccountModal from '@views/accounts/AccountModal'
+import { CategoryTypes } from '@/types/categories'
+import { useGetCurrenciesQuery } from '@/api/extendedApi'
+import Chip from '@mui/material/Chip'
 
 type Props = {
   account: Account
@@ -18,6 +21,12 @@ const AccountItem = ({ account }: Props) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const onClose = () => setIsModalOpen(false)
+
+  const { data: currencies } = useGetCurrenciesQuery({})
+  const currency = currencies?.find(currency => currency.id === account.currency) || {
+    symbol: 'N/A',
+    name: account.currency
+  }
 
   return (
     <>
@@ -31,8 +40,16 @@ const AccountItem = ({ account }: Props) => {
         onClick={() => setIsModalOpen(true)}
       >
         <CardContent sx={{ height: '100%' }}>
-          <Typography variant='h5' sx={{ color: contrastText }}>
+          <Typography variant='h5' sx={{ color: contrastText, mb: 2 }}>
             {account.name}
+          </Typography>
+          <Typography sx={{ color: contrastText }}>
+            <b>Валюта: </b>
+            {currency.symbol} ({currency.name})
+          </Typography>
+          <Typography sx={{ color: contrastText }}>
+            <b>Баланс: </b>
+            {account.balance}
           </Typography>
         </CardContent>
       </Card>

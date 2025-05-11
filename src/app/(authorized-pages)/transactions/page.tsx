@@ -1,7 +1,7 @@
-import AccountSettings from '@views/account-settings'
+import Transactions from '@views/transactions'
 
 const TransactionsPage = () => {
-  return <AccountSettings />
+  return <Transactions />
 }
 
 export default TransactionsPage
