@@ -1,5 +1,5 @@
 export type CreateTransactionRequest = {
-  account: number
-  amount: number
+  account: string
+  amount: string
   description: string
 }

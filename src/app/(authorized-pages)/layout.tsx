@@ -9,13 +9,15 @@ import Navbar from '@components/layout/vertical/Navbar'
 import { useRouter } from 'next/navigation'
 import { useCurrentUser } from '@/hooks/api/useCurrentUser'
 import { useEffect } from 'react'
-import { useGetCurrenciesQuery } from '@/api/extendedApi'
+import { useGetCurrenciesQuery, useGetAccountsQuery, useGetCategoriesQuery } from '@/api/extendedApi'
 
 const Layout = ({ children }: ChildrenType) => {
   const router = useRouter()
   const { user, isLoading } = useCurrentUser()
 
   useGetCurrenciesQuery({})
+  useGetAccountsQuery({})
+  useGetCategoriesQuery({})
 
   useEffect(() => {
     if (!isLoading && !user) {

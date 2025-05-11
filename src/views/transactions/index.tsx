@@ -7,7 +7,7 @@ import { PAGINATION_LIMIT } from '@/utils/constants'
 import TransactionsTable from '@views/transactions/TransactionsTable'
 import Pagination from '@mui/material/Pagination'
 import { Divider, Stack, Typography } from '@mui/material'
-import AddAccountButton from '@views/accounts/AddAccountButton'
+import AddTransactionButton from '@views/transactions/AddTransactionButton'
 
 const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -27,7 +27,7 @@ const Transactions = () => {
       <Grid item xs={12}>
         <Stack direction='row' justifyContent='space-between' alignItems='center' gap={2}>
           <Typography variant={'h4'}>Транзакції ({data?.count || 0})</Typography>
-          <AddAccountButton />
+          <AddTransactionButton />
         </Stack>
         <Divider sx={{ my: 3 }} />
         {data?.count ? (
