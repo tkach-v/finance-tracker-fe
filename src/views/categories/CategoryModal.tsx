@@ -3,7 +3,7 @@ import { Category, CategoryTypes } from '@/types/categories'
 import ModalContainer from '@components/modal/ModalContainer'
 import { FormProvider, RHFTextField } from '@components/HookForm'
 import { Modal, Stack } from '@mui/material'
-import { useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } from '@/api/extendedApi'
+import { useCreateCategoryMutation, useUpdateCategoryMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
 import { Controller, useForm } from 'react-hook-form'
@@ -12,6 +12,7 @@ import { CreateCategoryRequest } from '@/api/types/categories'
 import Typography from '@mui/material/Typography'
 import ColorPicker from '@components/ColorPicker'
 import Button from '@mui/material/Button'
+import DeleteCategoryButton from '@views/categories/DeleteCategoryButton'
 
 type Props = {
   open: boolean
@@ -57,7 +58,6 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
 
   const [createCategory] = useCreateCategoryMutation()
   const [updateCategory] = useUpdateCategoryMutation()
-  const [deleteCategory] = useDeleteCategoryMutation()
 
   const closeModal = () => {
     reset(defaultValues)
@@ -87,20 +87,6 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
     }
   }
 
-  const onDelete = async () => {
-    try {
-      if (category) {
-        await deleteCategory(category.id).unwrap()
-        closeModal()
-      }
-    } catch (error: any) {
-      showSnackBar({
-        message: 'Не вдалося видалити категорію. Спробуйте ще раз пізніше.',
-        type: 'error'
-      })
-    }
-  }
-
   return (
     <Modal open={open} onClose={closeModal}>
       <ModalContainer
@@ -127,18 +113,7 @@ const CategoryModal = ({ open, onClose, category, type }: Props) => {
             type={'number'}
           />
           <Stack direction={'row'} justifyContent={'end'} gap={'8px'} mt={'24px'}>
-            {category && (
-              <Button
-                variant='contained'
-                color={'error'}
-                fullWidth
-                type='button'
-                sx={{ py: '12px' }}
-                onClick={onDelete}
-              >
-                Видалити
-              </Button>
-            )}
+            {category && <DeleteCategoryButton category={category} onDelete={closeModal} />}
             <Button variant='contained' type='submit' fullWidth sx={{ py: '12px' }}>
               {category ? 'Зберегти' : 'Додати'}
             </Button>

@@ -2,7 +2,7 @@ import React from 'react'
 import ModalContainer from '@components/modal/ModalContainer'
 import { FormProvider, RHFSelect, RHFTextField } from '@components/HookForm'
 import { Modal, Stack } from '@mui/material'
-import { useCreateAccountMutation, useDeleteAccountMutation, useUpdateAccountMutation } from '@/api/extendedApi'
+import { useCreateAccountMutation, useUpdateAccountMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
 import { Controller, useForm } from 'react-hook-form'
@@ -13,6 +13,7 @@ import Button from '@mui/material/Button'
 import { Account } from '@/types/accounts'
 import { CreateAccountRequest } from '@/api/types/accounts'
 import CurrenciesSelectOptions from '@components/CurrenciesSelectOptions'
+import DeleteAccountButton from '@views/accounts/DeleteAccountButton'
 
 type Props = {
   open: boolean
@@ -54,7 +55,6 @@ const AccountModal = ({ open, onClose, account }: Props) => {
 
   const [createAccount] = useCreateAccountMutation()
   const [updateAccount] = useUpdateAccountMutation()
-  const [deleteAccount] = useDeleteAccountMutation()
 
   const closeModal = () => {
     reset(defaultValues)
@@ -81,20 +81,6 @@ const AccountModal = ({ open, onClose, account }: Props) => {
           type: 'error'
         })
       }
-    }
-  }
-
-  const onDelete = async () => {
-    try {
-      if (account) {
-        await deleteAccount(account.id).unwrap()
-        closeModal()
-      }
-    } catch (error: any) {
-      showSnackBar({
-        message: 'Не вдалося видалити рахунок. Спробуйте ще раз пізніше.',
-        type: 'error'
-      })
     }
   }
 
@@ -127,18 +113,7 @@ const AccountModal = ({ open, onClose, account }: Props) => {
             <CurrenciesSelectOptions />
           </RHFSelect>
           <Stack direction={'row'} justifyContent={'end'} gap={'8px'} mt={'24px'}>
-            {account && (
-              <Button
-                variant='contained'
-                color={'error'}
-                fullWidth
-                type='button'
-                sx={{ py: '12px' }}
-                onClick={onDelete}
-              >
-                Видалити
-              </Button>
-            )}
+            {account && <DeleteAccountButton account={account} onDelete={closeModal} />}
             <Button variant='contained' type='submit' fullWidth sx={{ py: '12px' }}>
               {account ? 'Зберегти' : 'Додати'}
             </Button>

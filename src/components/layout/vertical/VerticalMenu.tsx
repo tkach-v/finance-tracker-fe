@@ -58,9 +58,6 @@ const VerticalMenu = ({ scrollMenu }: { scrollMenu: (container: any, isPerfectSc
         <MenuItem href='/accounts' icon={<i className='ri-wallet-line' />}>
           Рахунки
         </MenuItem>
-        <MenuItem href='/charts' icon={<i className='ri-bar-chart-2-line' />}>
-          Діаграми
-        </MenuItem>
         <MenuItem href='/categories' icon={<i className='ri-shapes-line' />}>
           Категорії
         </MenuItem>
