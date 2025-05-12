@@ -3,13 +3,13 @@ import type { EndpointBuilder } from '@reduxjs/toolkit/query'
 import { TagTypes } from '@/utils/rtk-tags'
 import { TRANSACTIONS } from '@/api'
 import { Transaction } from '@/types/transactions'
-import { CreateTransactionRequest } from '@/api/types/transactions'
-import { PaginationRequestParams, PaginationResponse } from '@/api/types/pagination'
+import { CreateTransactionRequest, GetTransactionsRequestParams } from '@/api/types/transactions'
+import { PaginationResponse } from '@/api/types/pagination'
 import { buildQueryWithParams } from '@/api/utils/rtk-utils'
 
 export const apiTransactions = {
   endpoints: (builder: EndpointBuilder<any, any, any>) => ({
-    getTransactions: builder.query<PaginationResponse<Transaction>, PaginationRequestParams>({
+    getTransactions: builder.query<PaginationResponse<Transaction>, GetTransactionsRequestParams>({
       query: params => buildQueryWithParams(TRANSACTIONS.all(), params),
       providesTags: () => [{ type: TagTypes.TRANSACTIONS }]
     }),

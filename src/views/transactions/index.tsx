@@ -8,12 +8,21 @@ import TransactionsTable from '@views/transactions/TransactionsTable'
 import Pagination from '@mui/material/Pagination'
 import { Divider, Stack, Typography } from '@mui/material'
 import AddTransactionButton from '@views/transactions/AddTransactionButton'
+import { TransactionTypes } from '@/types/transactions'
+import TransactionsFilters from '@views/transactions/TransactionsFilters'
 
 const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
+  const [accountFilter, setAccountFilter] = useState<number | ''>('')
+  const [categoryFilter, setCategoryFilter] = useState<number | ''>('')
+  const [typeFilter, setTypeFilter] = useState<TransactionTypes | ''>('')
+
   const { data } = useGetTransactionsQuery({
-    page: currentPage
+    page: currentPage,
+    account: accountFilter || undefined,
+    category: categoryFilter || undefined,
+    type: typeFilter || undefined
   })
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -30,6 +39,15 @@ const Transactions = () => {
           <AddTransactionButton />
         </Stack>
         <Divider sx={{ my: 3 }} />
+        <TransactionsFilters
+          accountFilter={accountFilter}
+          setAccountFilter={setAccountFilter}
+          categoryFilter={categoryFilter}
+          setCategoryFilter={setCategoryFilter}
+          typeFilter={typeFilter}
+          setTypeFilter={setTypeFilter}
+          setCurrentPage={setCurrentPage}
+        />
         {data?.count ? (
           <>
             <TransactionsTable transactions={data.results} />

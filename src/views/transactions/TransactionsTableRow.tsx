@@ -22,7 +22,7 @@ const TransactionsTableRow = ({ transaction }: Props) => {
   const currencyText = useAccountCurrency({ accountId: transaction.account, short: true })
   const accountText = useAccount({ accountId: transaction.account })
   const categoryText = useCategory({ categoryId: transaction.category })
-  const transactionTypeText = transaction.type === TransactionTypes.EXPENSE ? 'Витрати' : 'Прибуток'
+  const transactionTypeText = transaction.type === TransactionTypes.EXPENSE ? 'Витрати' : 'Доходи'
 
   return (
     <>
