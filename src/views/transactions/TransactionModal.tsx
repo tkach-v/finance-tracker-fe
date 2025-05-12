@@ -2,12 +2,7 @@ import React from 'react'
 import ModalContainer from '@components/modal/ModalContainer'
 import { FormProvider, RHFSelect, RHFTextField } from '@components/HookForm'
 import { Modal, Stack } from '@mui/material'
-import {
-  useCreateTransactionMutation,
-  useGetAccountsQuery,
-  useGetCurrenciesQuery,
-  useUpdateTransactionMutation
-} from '@/api/extendedApi'
+import { useCreateTransactionMutation, useUpdateTransactionMutation } from '@/api/extendedApi'
 import * as yup from 'yup'
 import { useActions } from '@/hooks/useActions'
 import { useForm } from 'react-hook-form'
@@ -132,6 +127,7 @@ const TransactionModal = ({ open, onClose, transaction }: Props) => {
           />
           <RHFTextField
             name='description'
+            type={'textarea'}
             label='Опис'
             fullWidth
             error={!!errors.description}

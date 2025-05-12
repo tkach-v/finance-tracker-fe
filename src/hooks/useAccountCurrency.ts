@@ -1,10 +1,11 @@
 import { useGetAccountsQuery, useGetCurrenciesQuery } from '@/api/extendedApi'
 
 type Props = {
-  accountId: string
+  accountId: string | number
+  short?: boolean
 }
 
-export const useAccountCurrency = ({ accountId }: Props) => {
+export const useAccountCurrency = ({ accountId, short = false }: Props) => {
   const { data: accounts } = useGetAccountsQuery({})
   const { data: currencies } = useGetCurrenciesQuery({})
 
@@ -12,5 +13,6 @@ export const useAccountCurrency = ({ accountId }: Props) => {
   const currency = currencies?.find(c => c.id === currencyId)
 
   if (!currency) return ''
+  if (short) return currency?.symbol
   return `${currency?.symbol} (${currency?.name})`
 }

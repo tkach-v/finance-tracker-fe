@@ -15,9 +15,11 @@ const TransactionsTable = ({ transactions }: Props) => {
         <TableHead>
           <TableRow>
             <TableCell>Дата</TableCell>
+            <TableCell>Тип</TableCell>
             <TableCell>Сума</TableCell>
-            <TableCell>Опис</TableCell>
             <TableCell>Рахунок</TableCell>
+            <TableCell>Категорія</TableCell>
+            <TableCell>Опис</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
