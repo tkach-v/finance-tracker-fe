@@ -8,7 +8,7 @@ const AccountsSelectOptions = ({}: Props) => {
 
   return (
     <>
-      <option key={0} value={0}></option> {/* Empty option for default selection */}
+      <option key={''} value={''}></option> {/* Empty option for default selection */}
       {accounts?.map(a => (
         <option key={a.id} value={a.id}>
           {a.name}

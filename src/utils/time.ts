@@ -1,12 +1,9 @@
-export function formatDateToUk(isoString: string): string {
-  const date = new Date(isoString);
-
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+export function formatDateToUk(dateString: string): string {
+  const date = new Date(dateString);
 
   return new Intl.DateTimeFormat('uk-UA', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-    timeZone: userTimeZone,
   }).format(date);
 }

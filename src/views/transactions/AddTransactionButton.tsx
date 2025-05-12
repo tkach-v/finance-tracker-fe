@@ -4,7 +4,7 @@ import TransactionModal from '@views/transactions/TransactionModal'
 
 type Props = {}
 
-const AddAccountButton = ({}: Props) => {
+const AddTransactionButton = ({}: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onClose = () => setIsModalOpen(false)
@@ -17,4 +17,4 @@ const AddAccountButton = ({}: Props) => {
   )
 }
 
-export default AddAccountButton
+export default AddTransactionButton

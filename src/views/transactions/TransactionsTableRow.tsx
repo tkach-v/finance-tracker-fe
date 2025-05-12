@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { TableCell, TableRow } from '@mui/material'
 import { Transaction } from '@/types/transactions'
@@ -24,9 +26,7 @@ const TransactionsTableRow = ({ transaction }: Props) => {
         hover
         onClick={() => setIsModalOpen(true)}
       >
-        <TableCell component='th' scope='row'>
-          {formatDateToUk(transaction.created_at)}
-        </TableCell>
+        <TableCell component='th' scope='row'>{formatDateToUk(transaction.date)}</TableCell>
         <TableCell>{transaction.amount}</TableCell>
         <TableCell>{transaction.description}</TableCell>
         <TableCell>{transaction.account}</TableCell>
