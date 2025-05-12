@@ -19,7 +19,7 @@ export const apiTransactions = {
         method: 'POST',
         body
       }),
-      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }]
+      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }, { type: TagTypes.ACCOUNTS }]
     }),
     updateTransaction: builder.mutation<Transaction, { id: number; body: Partial<CreateTransactionRequest> }>({
       query: ({ id, body }) => ({
@@ -27,14 +27,14 @@ export const apiTransactions = {
         method: 'PATCH',
         body
       }),
-      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }]
+      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }, { type: TagTypes.ACCOUNTS }]
     }),
     deleteTransaction: builder.mutation<void, number>({
       query: id => ({
         url: TRANSACTIONS.byId(id),
         method: 'DELETE'
       }),
-      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }]
+      invalidatesTags: () => [{ type: TagTypes.TRANSACTIONS }, { type: TagTypes.ACCOUNTS }]
     })
   })
 }
