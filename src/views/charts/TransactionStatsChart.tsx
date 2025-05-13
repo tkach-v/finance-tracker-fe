@@ -83,7 +83,7 @@ const TransactionStatsChart = ({ transactionStatsInfo }: Props) => {
         }
       },
       axisTicks: { show: false },
-      axisBorder: { show: false },
+      axisBorder: { show: false }
     },
     yaxis: {
       show: true,
@@ -98,7 +98,7 @@ const TransactionStatsChart = ({ transactionStatsInfo }: Props) => {
         formatter: (val: number) => formatNumber(val)
       },
       logarithmic: true,
-      logBase: 10,
+      logBase: 10
     },
     tooltip: {
       shared: true,
@@ -116,13 +116,7 @@ const TransactionStatsChart = ({ transactionStatsInfo }: Props) => {
     <Card>
       <CardHeader title='Діаграма доходів та витрат (USD)' />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <AppReactApexCharts
-          type='bar'
-          height={520}
-          width='100%'
-          series={series}
-          options={options}
-        />
+        <AppReactApexCharts type='bar' height={520} width='100%' series={series} options={options} />
       </CardContent>
     </Card>
   )

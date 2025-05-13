@@ -5,20 +5,18 @@ export enum TransactionStatsFreq {
   yearly = 'yearly'
 }
 
-
 export type TransactionStatsQuery = {
-  account_ids?: number[];
-  freq?: TransactionStatsFreq;
+  account_ids?: number[]
+  freq?: TransactionStatsFreq
 }
-
 
 export type TransactionStatsResponseItem = {
-  period: string;
-  income: number;
-  expense: number;
+  period: string
+  income: number
+  expense: number
 }
 
-export type TransactionStatsResponse = TransactionStatsResponseItem[];
+export type TransactionStatsResponse = TransactionStatsResponseItem[]
 
 export type TotalBalanceResponse = {
   total_usd: number

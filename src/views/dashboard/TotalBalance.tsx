@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import { useGetTotalBalanceQuery } from '@/api/extendedApi'
 
 const TotalBalance = () => {
-  const { data } = useGetTotalBalanceQuery();
+  const { data } = useGetTotalBalanceQuery()
 
   return (
     <Card>

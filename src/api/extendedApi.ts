@@ -43,5 +43,5 @@ export const {
   useDeleteTransactionMutation,
 
   useGetTransactionStatsQuery,
-  useGetTotalBalanceQuery,
+  useGetTotalBalanceQuery
 } = extendedApi

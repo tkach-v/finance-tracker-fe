@@ -14,6 +14,6 @@ export const apiStatistics = {
     getTotalBalance: builder.query<TotalBalanceResponse, void>({
       query: () => STATS.totalBalance(),
       providesTags: () => [{ type: TagTypes.ACCOUNTS }]
-    }),
+    })
   })
 }

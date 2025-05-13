@@ -39,16 +39,19 @@ const TransactionsTableRow = ({ transaction }: Props) => {
           {formatDateToUk(transaction.date)}
         </TableCell>
         <TableCell>
-          <Chip label={transactionTypeText} color={transaction.type === TransactionTypes.EXPENSE ? 'error' : 'success'} />
+          <Chip
+            label={transactionTypeText}
+            color={transaction.type === TransactionTypes.EXPENSE ? 'error' : 'success'}
+          />
         </TableCell>
         <TableCell>
           {transaction.amount} {currencyText}
         </TableCell>
         <TableCell>
-          <Chip label={accountText}/>
+          <Chip label={accountText} />
         </TableCell>
         <TableCell>
-          <Chip label={categoryText}/>
+          <Chip label={categoryText} />
         </TableCell>
         <TableCell>{transaction.description}</TableCell>
       </TableRow>
