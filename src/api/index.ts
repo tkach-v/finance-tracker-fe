@@ -31,4 +31,5 @@ export const TRANSACTIONS = {
 
 export const STATS = {
   transactions: () => '/stats/transactions/',
+  totalBalance: () => '/stats/total-balance/'
 }

@@ -19,3 +19,7 @@ export type TransactionStatsResponseItem = {
 }
 
 export type TransactionStatsResponse = TransactionStatsResponseItem[];
+
+export type TotalBalanceResponse = {
+  total_usd: number
+}
