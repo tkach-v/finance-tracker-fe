@@ -5,6 +5,7 @@ import { apiCategories } from '@/api/endpoints/apiCategories'
 import { apiAccounts } from '@/api/endpoints/apiAccounts'
 import { apiCurrencies } from '@/api/endpoints/apiCurrencies'
 import { apiTransactions } from '@/api/endpoints/apiTransactions'
+import { apiStatistics } from '@/api/endpoints/apiStatistics'
 
 export const extendedApi = BaseApi.injectEndpoints(apiAuth)
   .injectEndpoints(apiUsers)
@@ -12,6 +13,7 @@ export const extendedApi = BaseApi.injectEndpoints(apiAuth)
   .injectEndpoints(apiAccounts)
   .injectEndpoints(apiCurrencies)
   .injectEndpoints(apiTransactions)
+  .injectEndpoints(apiStatistics)
 
 export const {
   useLoginMutation,
@@ -38,5 +40,7 @@ export const {
   useGetTransactionsQuery,
   useCreateTransactionMutation,
   useUpdateTransactionMutation,
-  useDeleteTransactionMutation
+  useDeleteTransactionMutation,
+
+  useGetTransactionStatsQuery,
 } = extendedApi

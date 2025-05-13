@@ -28,3 +28,7 @@ export const TRANSACTIONS = {
   all: () => '/transactions/',
   byId: (id: number) => `/transactions/${id}/`
 }
+
+export const STATS = {
+  transactions: () => '/stats/transactions/',
+}
